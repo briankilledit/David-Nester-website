@@ -191,31 +191,31 @@ $(document).ready(function(){
 
 
 
-	heroItems = {};
+	// heroItems = {};
 
-	Parse.initialize("edbfdd6e-d9d4-4231-a614-41a72f87fe1f");
-	Parse.serverURL = "https://api.parse.buddy.com/parse/";
+	// Parse.initialize("edbfdd6e-d9d4-4231-a614-41a72f87fe1f");
+	// Parse.serverURL = "https://api.parse.buddy.com/parse/";
 
-	var query = new Parse.Query("Hero");
-	query.first({
-		success: function($result) {
-			heroItems.title = $result.get("title");
-			heroItems.subtitle = $result.get("subtitle");
-			heroItems.buttonText = $result.get("buttonText");
-			heroItems.imgUrl = $result.get("imgUrl");
-			populateHero();
-		},
-		error: function(error) {
-			console.log("Error: " + error.code + " " + error.message);
-		}
-	});
+	// var query = new Parse.Query("Hero");
+	// query.first({
+	// 	success: function($result) {
+	// 		heroItems.title = $result.get("title");
+	// 		heroItems.subtitle = $result.get("subtitle");
+	// 		heroItems.buttonText = $result.get("buttonText");
+	// 		heroItems.imgUrl = $result.get("imgUrl");
+	// 		populateHero();
+	// 	},
+	// 	error: function(error) {
+	// 		console.log("Error: " + error.code + " " + error.message);
+	// 	}
+	// });
 
-	function populateHero(){
-		$("#hero").attr("style", "background-image: url('" + heroItems.imgUrl + "');");
-		$("#hero h1").html(heroItems.title);
-		$("#hero h2").html(heroItems.subtitle);
-		$("#hero .button a").html(heroItems.buttonText);
-	};
+	// function populateHero(){
+	// 	$("#hero").attr("style", "background-image: url('" + heroItems.imgUrl + "');");
+	// 	$("#hero h1").html(heroItems.title);
+	// 	$("#hero h2").html(heroItems.subtitle);
+	// 	$("#hero .button a").html(heroItems.buttonText);
+	// };
 
 
 
