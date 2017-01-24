@@ -1,0 +1,34 @@
+/* ADMIN CSS */
+
+* {
+	color: #6f6f6f;
+}
+
+body.admin {
+
+}
+
+	body.admin .navbar {
+		/*display: none;*/
+		border-radius: 0;
+	}
+
+
+	body.admin .container {}
+
+
+		body.admin section {
+			display: none;
+			margin-bottom: 60px;
+		}
+
+		body.admin section.login {
+			margin-top: 30px;
+		}
+
+			body.admin section h1 {
+				margin-bottom: 15px;
+				padding-bottom: 15px;
+				border-bottom: 1px #cccccc solid;
+			}
+
