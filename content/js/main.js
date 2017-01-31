@@ -221,7 +221,21 @@ $(document).ready(function(){
 
 
 
+	if($("body").hasClass("dev")){
 
+
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://www.youtube.com/channel/UCbVWA6H1P0wED_-fKFLj0yg", false);
+		// xhr.setRequestHeader('Content-Type', 'text/xml');
+		xhr.send();
+		console.log(xhr);
+		console.log(xhr.status);
+
+
+
+
+		// alert("HI!");
+	}
 
 
 

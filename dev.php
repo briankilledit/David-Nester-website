@@ -17,7 +17,7 @@
 		<script class="davidNester" src="content/js/main.js" type="text/javascript"></script>
 
 	</head>
-	<body>
+	<body class="dev">
 
 		<?php require 'autoload.php'; ?>
 
@@ -116,84 +116,17 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>02/04/17</td>
-							<td>TP's Bar<br>Kimberly, AL</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr>
-						<tr>
-							<td>02/11/17</td>
-							<td>O'Neals<br>Cincinnati, OH</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr>
-						<tr>
-							<td>02/25/17</td>
-							<td>Jerzees<br>Newport, KY</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr>
-						<tr>
-							<td>03/03/17</td>
-							<td>KJ's<br>Crescent Springs, KY</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr>
-						<tr>
-							<td>03/18/17</td>
-							<td>Hayloft Tavern<br>Alexandria, KY</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr>
-						<tr>
-							<td>04/14/17</td>
-							<td>Jerzees<br>Newport, KY</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr>
-						<tr>
-							<td>05/20/17</td>
-							<td>KJ's<br>Crescent Springs, KY</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr>
-						<tr>
-							<td>06/02/17</td>
-							<td>Jerzees<br>Newport, KY</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr>
-						<tr>
-							<td>06/30/17</td>
-							<td>Margaritaville<br>Pensacola Beach, FL</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr>
-						<tr>
-							<td>07/01/17</td>
-							<td>Margaritaville<br>Pensacola Beach, FL</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr>
-						<tr>
-							<td>07/07/17</td>
-							<td>Margaritaville<br>Pensacola Beach, FL</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr>
-						<tr>
-							<td>07/08/17</td>
-							<td>Margaritaville<br>Pensacola Beach, FL</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr>
-						<tr>
-							<td>07/15/17</td>
-							<td>KJ's<br>Crescent Springs, KY</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr>
+
+						<?php 
+							for ($i = 0; $i < count($showItems); $i++)
+								echo "<tr>
+										<td>" . $showItems[$i]["date"] . "</td>
+										<td>" . $showItems[$i]["venue"] . "<br>" . $showItems[$i]["city"] . ", " . $showItems[$i]["state"] . "</td>
+										<td>" . $showItems[$i]["band"] . "</td>
+										<td class='perf'>" . $showItems[$i]["type"] . "</td>
+									</tr>";
+						?>
+
 					</tbody>
 				</table>
 			</div>

@@ -59,9 +59,6 @@ ParseClient::initialize( 'edbfdd6e-d9d4-4231-a614-41a72f87fe1f', '', '8BqLBYdL8Q
 ParseClient::setServerURL('https://api.parse.buddy.com/', 'parse');
 
 
-
-
-
 // Utils
 // ====================================
 
@@ -87,15 +84,20 @@ $heroItems['imgUrl'] = $heroResult->get('imgUrl');
 // Get show items
 // ====================================
 
-// $query = new ParseQuery("Shows");
-// $results = $query->find();
+$showItems = array();
 
-// echo "Successfully retrieved " . count($results) . " shows.<br><br>";
-// // Do something with the returned ParseObject values
-// for ($i = 0; $i < count($results); $i++) {
-//     $object = $results[$i];
-//     echo '<p>' . $object->getObjectId() . ' - ' . $object->get('city') . '</p>';
-// }
+$showQuery = new ParseQuery("Shows");
+$showResults = $showQuery->find();
+for ($i = 0; $i < count($showResults); $i++) {
+    $newShow = array();
+    $newShow['date'] = $showResults[$i]->get('date');
+    $newShow['city'] = $showResults[$i]->get('city');
+    $newShow['state'] = $showResults[$i]->get('state');
+    $newShow['venue'] = $showResults[$i]->get('venue');
+    $newShow['band'] = $showResults[$i]->get('band');
+    $newShow['type'] = $showResults[$i]->get('type');
+    array_push($showItems, $newShow);
+}
 
 
 
