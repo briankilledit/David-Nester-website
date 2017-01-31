@@ -191,50 +191,19 @@ $(document).ready(function(){
 
 
 
-	// heroItems = {};
-
-	// Parse.initialize("edbfdd6e-d9d4-4231-a614-41a72f87fe1f");
-	// Parse.serverURL = "https://api.parse.buddy.com/parse/";
-
-	// var query = new Parse.Query("Hero");
-	// query.first({
-	// 	success: function($result) {
-	// 		heroItems.title = $result.get("title");
-	// 		heroItems.subtitle = $result.get("subtitle");
-	// 		heroItems.buttonText = $result.get("buttonText");
-	// 		heroItems.imgUrl = $result.get("imgUrl");
-	// 		populateHero();
-	// 	},
-	// 	error: function(error) {
-	// 		console.log("Error: " + error.code + " " + error.message);
-	// 	}
-	// });
-
-	// function populateHero(){
-	// 	$("#hero").attr("style", "background-image: url('" + heroItems.imgUrl + "');");
-	// 	$("#hero h1").html(heroItems.title);
-	// 	$("#hero h2").html(heroItems.subtitle);
-	// 	$("#hero .button a").html(heroItems.buttonText);
-	// };
-
-
-
 
 
 	if($("body").hasClass("dev")){
 
 
-		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "https://www.youtube.com/channel/UCbVWA6H1P0wED_-fKFLj0yg", false);
-		// xhr.setRequestHeader('Content-Type', 'text/xml');
-		xhr.send();
-		console.log(xhr);
-		console.log(xhr.status);
+		// var xhr = new XMLHttpRequest();
+		// xhr.open("GET", "https://www.youtube.com/channel/UCbVWA6H1P0wED_-fKFLj0yg", false);
+		// // xhr.setRequestHeader('Content-Type', 'text/xml');
+		// xhr.send();
+		// console.log(xhr);
+		// console.log(xhr.status);
 
 
-
-
-		// alert("HI!");
 	}
 
 

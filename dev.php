@@ -118,12 +118,12 @@
 					<tbody>
 
 						<?php 
-							for ($i = 0; $i < count($showItems); $i++)
+							foreach ($showItems as $show)
 								echo "<tr>
-										<td>" . $showItems[$i]["date"] . "</td>
-										<td>" . $showItems[$i]["venue"] . "<br>" . $showItems[$i]["city"] . ", " . $showItems[$i]["state"] . "</td>
-										<td>" . $showItems[$i]["band"] . "</td>
-										<td class='perf'>" . $showItems[$i]["type"] . "</td>
+										<td>" . $show["date"] . "</td>
+										<td>" . $show["venue"] . "<br>" . $show["city"] . ", " . $show["state"] . "</td>
+										<td>" . $show["band"] . "</td>
+										<td class='perf'>" . $show["type"] . "</td>
 									</tr>";
 						?>
 

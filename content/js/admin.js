@@ -81,7 +81,7 @@
 		} else {
 			var currentUser = Parse.User.current().get("fname");
 			$("nav.navbar").show();
-			$("#user").html(currentUser);
+			$("#user, #userIntro").html(currentUser);
 		}
 
 		if(hitDb){
@@ -91,6 +91,9 @@
 	};
 
 	var queryTable = {
+		index : function(){
+
+		}, 
 		hero : function(){
 			var query = new Parse.Query("Hero");
 			query.first({
