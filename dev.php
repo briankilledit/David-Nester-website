@@ -13,6 +13,7 @@
 
 		<!-- Javascript -->
 		<script class="davidNester" src="content/js/vendor/jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script class="davidNester" src="https://apis.google.com/js/api.js" type="text/javascript"></script>
 		<script class="davidNester" src="content/js/killJunk.js" type="text/javascript"></script>
 		<script class="davidNester" src="content/js/main.js" type="text/javascript"></script>
 
@@ -74,30 +75,15 @@
 				<h1>Videos</h1>
 				<p class="small">Click image to play video</a>
 				<ul id="videoList">
-					<li video="https://www.youtube.com/embed/Cua06hSlCKY">
+
+					<!-- ===================================================================================
+					Leaving this here for reference ... js youtube api populates this list now sonny boy ! 
+					==================================================================================== -->
+					<!-- <li video="https://www.youtube.com/embed/Cua06hSlCKY">
 						<img src="content/img/drumThumb_006.jpg">
 						<h3>A Day To Remember - Bad Vibrations (drum cover)</h3>
-					</li>
-					<li video="https://www.youtube.com/embed/LtZyRWlDsWk">
-						<img src="content/img/drumThumb_005.jpg">
-						<h3>Architects - A Match Made in Heaven (drum&nbsp;cover)</h3>
-					</li>
-					<li video="https://www.youtube.com/embed/7aHspfoHHEI">
-						<img src="content/img/drumThumb_004.jpg">
-						<h3>Foo Fighters - My Hero (drum&nbsp;cover)</h3>
-					</li>
-					<li video="https://www.youtube.com/embed/7_mOyrc8Ve0">
-						<img src="content/img/drumThumb_001.jpg">
-						<h3>Underoath - In Regards To Myself (drum&nbsp;cover)</h3>
-					</li>
-					<li video="https://www.youtube.com/embed/gfUSwQNouSM">
-						<img src="content/img/drumThumb_002.jpg">
-						<h3>Paramore - Now (drum&nbsp;cover)</h3>
-					</li>
-					<li video="https://www.youtube.com/embed/cifkvDecAhs">
-						<img src="content/img/drumThumb_003.jpg">
-						<h3>Paramore - Misery Business (drum&nbsp;cover)</h3>
-					</li>
+					</li> -->
+
 				</ul>
 			</div>
 		</div>

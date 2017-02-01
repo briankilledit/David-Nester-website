@@ -69,17 +69,20 @@ $(document).ready(function(){
 	// Pop-up video!
 	// ----------------------------------------------------
 
-	$("#videoList li").bind("click", function(){
-		var link = $(this).attr("video");
-		if(link){
-			$(".blackOut").fadeIn(250, function(){
-				$(".blackOut .popBox").slideDown(200, function(){
-					$(".blackOut .close").fadeIn(300);
-					$(".blackOut iframe").attr("src", link);
+	function bindVidClick(){
+		$("#videoList li").on("click", function(){
+			var link = $(this).attr("video");
+			if(link){
+				$(".blackOut").fadeIn(250, function(){
+					$(".blackOut .popBox").slideDown(200, function(){
+						$(".blackOut .close").fadeIn(300);
+						$(".blackOut iframe").attr("src", link);
+					});
 				});
-			});
-		};
-	});
+			};
+		});
+	};
+
 
 
 
@@ -178,6 +181,7 @@ $(document).ready(function(){
 	// ----------------------------------------------------
 
 	scrollyNav();
+	bindVidClick();
 	$(".blackOut iframe").attr("src", "");
 
 
@@ -195,14 +199,39 @@ $(document).ready(function(){
 
 	if($("body").hasClass("dev")){
 
+		var channelId  = 'UCbVWA6H1P0wED_-fKFLj0yg';
+		var apiKey     = 'AIzaSyAKgQN4DxNo4XvdpIH3sKaZgX1F1upw7rQ';
 
-		// var xhr = new XMLHttpRequest();
-		// xhr.open("GET", "https://www.youtube.com/channel/UCbVWA6H1P0wED_-fKFLj0yg", false);
-		// // xhr.setRequestHeader('Content-Type', 'text/xml');
-		// xhr.send();
-		// console.log(xhr);
-		// console.log(xhr.status);
+		$.get(
+			'https://www.googleapis.com/youtube/v3/channels',{
+				part: 'contentDetails',
+				id: channelId,
+				key: apiKey }
+		).done(function(data){
+			var pid = data.items[0].contentDetails.relatedPlaylists.uploads;
+			getVids(pid);
+		});
 
+		function getVids($pid){
+			$.get(
+				'https://www.googleapis.com/youtube/v3/playlistItems',{
+					part: 'snippet',
+					maxResults: 12,
+					playlistId: $pid,
+					key: apiKey }
+			).done(function(data){
+				appendVideoList(data.items);
+			});
+		};
+
+		function appendVideoList($vids){
+			$("#videoList").html("");
+			for(var i = 0; i < $vids.length; i++){
+				var thisVideo = "<li video='https://www.youtube.com/embed/" + $vids[i].snippet.resourceId.videoId + "'><img src='" + $vids[i].snippet.thumbnails.high.url + "'><h3>" + $vids[i].snippet.title + "</h3></li>";
+				$("#videoList").append(thisVideo);
+			}
+			bindVidClick();
+		};
 
 	}
 
