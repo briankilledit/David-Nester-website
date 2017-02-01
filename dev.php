@@ -73,13 +73,16 @@
 			<div class="content">
 				<h1>Videos</h1>
 				<p class="small">Click image to play video</a>
-				<ul id="videoList">
+				<ul id="videoList" youtube="<?php echo $youtubeId ?>">
 
 					<!-- ===================================================================================
 					Leaving this here for reference ... js youtube api populates this list now sonny boy ! 
 					==================================================================================== -->
-					<!-- <li video="https://www.youtube.com/embed/Cua06hSlCKY">
-						<img src="content/img/drumThumb_006.jpg">
+
+					<!-- <li video='https://www.youtube.com/embed/Cua06hSlCKY'>
+						<div class='imgContainer'>
+							<div class='content' style='background-image: url("content/img/drumThumb_006.jpg");'></div>
+						</div>
 						<h3>A Day To Remember - Bad Vibrations (drum cover)</h3>
 					</li> -->
 

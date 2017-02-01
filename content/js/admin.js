@@ -15,6 +15,7 @@
 	// ===================================
 	var hero = {};
 	var shows = [];
+	var youtube_id = '';
 
 
 
@@ -91,9 +92,6 @@
 	};
 
 	var queryTable = {
-		index : function(){
-
-		}, 
 		hero : function(){
 			var query = new Parse.Query("Hero");
 			query.first({
@@ -108,9 +106,25 @@
 					console.log("Error: " + error.code + " " + error.message);
 				}
 			});
+		},
+		videos : function(){
+			var query = new Parse.Query("Videos");
+			query.first({
+				success: function($result) {
+					youtube_id = $result.get("youtube_id");
+					$("input[for='youtube_id']").val(youtube_id);
+				},
+				error: function(error) {
+					console.log("Error: " + error.code + " " + error.message);
+				}
+			});			
 		}
 	};
 
+
+	// ============================================
+	// 				HERO SECTION 
+	// ============================================
 
 	function populateHeroForm(){
 		$("#hero-form input[type='text']").each(function(){
@@ -146,6 +160,36 @@
 			});
 		});
 	};
+
+
+
+
+
+
+
+	// ============================================
+	// 				VIDEO SECTION 
+	// ============================================
+
+	function saveVideosForm(){
+		var idInput = $("input[for='youtube_id']").val();
+		var query = new Parse.Query("Videos");
+		query.first({
+			success: function($result) {
+				$result.set("youtube_id", idInput);
+				$result.save().then(function($obj) {
+					alert("Save successful!");
+				}, function($error) {
+					alert("Save failed");
+				});
+			},
+			error: function(error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+	};
+
+
 
 
 
@@ -190,6 +234,10 @@
 
 		$("#submitHero").on('click', function(){
 			saveHeroForm();
+		});
+
+		$("#submitVideos").on('click', function(){
+			saveVideosForm();
 		});
 
 	};

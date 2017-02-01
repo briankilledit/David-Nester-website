@@ -11,6 +11,7 @@
 
 
 $(document).ready(function(){
+	'use strict';
 
 
 
@@ -66,8 +67,46 @@ $(document).ready(function(){
 
 
 	// ----------------------------------------------------
-	// Pop-up video!
+	// YouTube API
 	// ----------------------------------------------------
+
+	var channelId  = $("#videoList").attr("youtube");
+	var apiKey     = "AIzaSyAKgQN4DxNo4XvdpIH3sKaZgX1F1upw7rQ";
+
+	console.log(channelId);
+
+	function fetchYoutubeData(){
+		$.get(
+			'https://www.googleapis.com/youtube/v3/channels',{
+				part: 'contentDetails',
+				id: channelId,
+				key: apiKey }
+		).done(function(data){
+			var pid = data.items[0].contentDetails.relatedPlaylists.uploads;
+			getVids(pid);
+		});
+	};
+
+	function getVids($pid){
+		$.get(
+			'https://www.googleapis.com/youtube/v3/playlistItems',{
+				part: 'snippet',
+				maxResults: 12,
+				playlistId: $pid,
+				key: apiKey }
+		).done(function(data){
+			appendVideoList(data.items);
+		});
+	};
+
+	function appendVideoList($vids){
+		$("#videoList").html("");
+		for(var i = 0; i < $vids.length; i++){
+			var thisVideo = "<li video='https://www.youtube.com/embed/" + $vids[i].snippet.resourceId.videoId + "?autoplay=1'><div class='imgContainer'><div class='content' style='background-image: url(" + $vids[i].snippet.thumbnails.high.url + ");'></div></div><h3>" + $vids[i].snippet.title + "</h3></li>";
+			$("#videoList").append(thisVideo);
+		}
+		bindVidClick();
+	};
 
 	function bindVidClick(){
 		$("#videoList li").on("click", function(){
@@ -181,7 +220,7 @@ $(document).ready(function(){
 	// ----------------------------------------------------
 
 	scrollyNav();
-	bindVidClick();
+	fetchYoutubeData();
 	$(".blackOut iframe").attr("src", "");
 
 
@@ -193,47 +232,6 @@ $(document).ready(function(){
 
 
 
-
-
-
-
-	if($("body").hasClass("dev")){
-
-		var channelId  = 'UCbVWA6H1P0wED_-fKFLj0yg';
-		var apiKey     = 'AIzaSyAKgQN4DxNo4XvdpIH3sKaZgX1F1upw7rQ';
-
-		$.get(
-			'https://www.googleapis.com/youtube/v3/channels',{
-				part: 'contentDetails',
-				id: channelId,
-				key: apiKey }
-		).done(function(data){
-			var pid = data.items[0].contentDetails.relatedPlaylists.uploads;
-			getVids(pid);
-		});
-
-		function getVids($pid){
-			$.get(
-				'https://www.googleapis.com/youtube/v3/playlistItems',{
-					part: 'snippet',
-					maxResults: 12,
-					playlistId: $pid,
-					key: apiKey }
-			).done(function(data){
-				appendVideoList(data.items);
-			});
-		};
-
-		function appendVideoList($vids){
-			$("#videoList").html("");
-			for(var i = 0; i < $vids.length; i++){
-				var thisVideo = "<li video='https://www.youtube.com/embed/" + $vids[i].snippet.resourceId.videoId + "'><img src='" + $vids[i].snippet.thumbnails.high.url + "'><h3>" + $vids[i].snippet.title + "</h3></li>";
-				$("#videoList").append(thisVideo);
-			}
-			bindVidClick();
-		};
-
-	}
 
 
 

@@ -37,6 +37,18 @@ $heroItems['buttonText'] = $heroResult->get('buttonText');
 $heroItems['imgUrl'] = $heroResult->get('imgUrl');
 
 
+
+
+// Get youtube channel ID
+// ====================================
+
+$videoQuery = new ParseQuery("Videos");
+$videoResult = $videoQuery->first();
+$youtubeId = $videoResult->get('youtube_id');
+
+
+
+
 // Get show items
 // ====================================
 
@@ -54,3 +66,16 @@ for ($i = 0; $i < count($showResults); $i++) {
     $newShow['type'] = $showResults[$i]->get('type');
     array_push($showItems, $newShow);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

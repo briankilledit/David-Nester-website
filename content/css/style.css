@@ -626,19 +626,37 @@ nav.wrapper.scrolling {
 				padding: 0;
 			}
 
-				#video ul li img {
-					width: 100%;
-					height: auto;
-					border: 1px #000000 solid;
-					-webkit-transition: all .22s ease-in-out;
-					-moz-transition: all .22s ease-in-out;
-					-o-transition: all .22s ease-in-out;
-					transition: all .22s ease-in-out;
+
+				#video ul li div.imgContainer {
+					position: relative;
 				}
 
-				#video ul li:hover img {
-					border: 1px #606060 solid;
+				#video ul li div.imgContainer:before {
+					display: block;
+					content: "";
+					width: 100%;
+					/* 16:9 aspect ratio */
+					padding-top: 56.25%;
 				}
+
+					#video ul li div.imgContainer > .content {
+						-webkit-transition: all .22s ease-in-out;
+						-moz-transition: all .22s ease-in-out;
+						-o-transition: all .22s ease-in-out;
+						transition: all .22s ease-in-out;
+						background-position: center center;
+						background-size: cover;
+						background-repeat: no-repeat;
+						position: absolute;
+						top: 0;
+						left: 0;
+						right: 0;
+						bottom: 0;
+					}
+
+					#video ul li:hover div.imgContainer > .content {
+						/*background-size: 106% auto;*/
+					}
 
 				#video ul li h3 {
 					line-height: 1.2em;
@@ -968,7 +986,7 @@ nav.wrapper.scrolling {
 
 .blackOut{
 	display: none;
-	background-color: rgba(0,0,0,0.6);
+	background-color: rgba(0,0,0,0.75);
 	position: fixed;
 	z-index: 11;
 	width: 100%;
@@ -979,7 +997,6 @@ nav.wrapper.scrolling {
 	.blackOut .popBox {
 		display: none;
 		background-color: transparent;
-		border: 7px #cfcfcf solid;
 		padding: 0;
 		width: 800px;
 		height: 450px;
