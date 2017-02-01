@@ -13,7 +13,6 @@
 
 		<!-- Javascript -->
 		<script class="davidNester" src="content/js/vendor/jquery-1.11.3.min.js" type="text/javascript"></script>
-		<script class="davidNester" src="https://apis.google.com/js/api.js" type="text/javascript"></script>
 		<script class="davidNester" src="content/js/killJunk.js" type="text/javascript"></script>
 		<script class="davidNester" src="content/js/main.js" type="text/javascript"></script>
 
