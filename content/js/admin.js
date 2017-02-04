@@ -118,8 +118,45 @@
 					console.log("Error: " + error.code + " " + error.message);
 				}
 			});			
+		},
+		shows : function(){
+			shows = [];
+			var query = new Parse.Query('Shows');
+			query.find({
+				success: function(results) {
+					for (var i = 0; i < results.length; i++) {
+						var newShow = {};
+						newShow.id = results[i].id;
+						newShow.date = results[i].get('date');
+						newShow.dateObj = createDateObj(newShow.date);
+						newShow.venue = results[i].get('venue');
+						newShow.city = results[i].get('city');
+						newShow.state = results[i].get('state');
+						newShow.band = results[i].get('band');
+						newShow.type = results[i].get('type');
+
+						shows.push(newShow);
+
+						results[i].set('dateObj', newShow.dateObj);
+						results[i].save().then(function($obj) {
+							// console.log("Save dateObj successful!", $obj);
+						}, function($error) {
+							console.log("Save dateObj failed", $error);
+						});
+
+					}
+					populateShowsList();
+				},
+				error: function(error) {
+					console.log("Error: " + error.code + " " + error.message);
+				}
+			});
 		}
 	};
+
+
+
+
 
 
 	// ============================================
@@ -194,6 +231,58 @@
 
 
 
+	// ============================================
+	// 				SHOWS LIST
+	// ============================================
+
+
+	// Simple util to return a date object from a "xx/xx/xx" style sate string
+	// -------------------------------------------------------------------------------------
+	function createDateObj($date) {
+		var dateParts = $date.split("/");
+		return new Date(2000 + parseInt(dateParts[2], 10), parseInt(dateParts[0], 10) - 1, parseInt(dateParts[1], 10));
+	};
+
+	// Sort & populate the list in the admin with all shows from database
+	// -------------------------------------------------------------------------------------
+	function populateShowsList(){
+
+		shows.sort(function(a, b){
+			return a.dateObj - b.dateObj;
+		});
+
+		$(".showsList tbody").empty().promise().done(function(){
+			for(var i = 0; i < shows.length; i++){
+				var thisShowRow = "<tr showId='" + shows[i].id + "'><td>" + shows[i].date + "</td><td>" + shows[i].venue + "</td><td>" + shows[i].city + "</td><td>" + shows[i].state + "</td><td>" + shows[i].band + "</td><td>" + shows[i].type + "</td></tr>";
+				$(".showsList tbody").append(thisShowRow);
+			}
+		});
+
+		$(".showsList tbody tr").bind('click', function(){
+			var thisId = $(this).attr("showId");
+			editShowPopup(thisId);
+		});
+
+
+
+	};
+
+
+	function editShowPopup($showId){
+
+		animatePopup(function(){
+			if($showId){
+				console.log("Edit show: " + $showId);
+			} else {
+				console.log("Adding new show!");
+			}
+		});
+	};
+
+
+	function animatePopup($func){
+		$func();
+	}
 
 
 
@@ -239,6 +328,10 @@
 		$("#submitVideos").on('click', function(){
 			saveVideosForm();
 		});
+		
+		$("#addNewShow").on('click', function(){
+			editShowPopup();
+		});
 
 	};
 
@@ -264,46 +357,3 @@
 
 
 
-	// function returnShows(){
-	// 	var query = new Parse.Query('Shows');
-
-	// 	query.find({
-	// 		success: function(results) {
-	// 			for (var i = 0; i < results.length; i++) {
-	// 				var newShow = {};
-	// 				newShow.dateObj = results[i].get('date');
-	// 				newShow.date = formatDate(newShow.dateObj);
-	// 				newShow.venue = results[i].get('venue');
-	// 				newShow.city = results[i].get('city');
-	// 				newShow.band = results[i].get('band');
-	// 				newShow.isDrummer = results[i].get('isDrummer');
-	// 				newShow.type = newShow.isDrummer ? "Drummer" : "Drum Tech";
-	// 				shows.push(newShow);
-	// 			}
-
-	// 			console.log(shows);
-
-	// 		},
-	// 		error: function(error) {
-	// 			console.log("Error: " + error.code + " " + error.message);
-	// 		}
-	// 	});
-
-	// 	var test = new Date();
-
-	// 	console.log(formatDate(test));
-	// }
-
-
-	// function formatDate($date){
-
-	// 	var theMonthNum = $date.getUTCMonth()+1,
-	// 		theMonth = theMonthNum < 10 ? "0"+theMonthNum.toString() : theMonthNum.toString(),
-	// 		theDay = $date.getUTCDate().toString(),
-	// 		fullYear = $date.getFullYear().toString(),
-	// 		theYear = fullYear.substr(-2),
-	// 		theDate = theMonth + "/" + theDay + "/" + theYear;
-
-	// 	return theDate;
-
-	// };

@@ -55,6 +55,7 @@ $youtubeId = $videoResult->get('youtube_id');
 $showItems = array();
 
 $showQuery = new ParseQuery("Shows");
+$showQuery->ascending("dateObj");
 $showResults = $showQuery->find();
 for ($i = 0; $i < count($showResults); $i++) {
     $newShow = array();

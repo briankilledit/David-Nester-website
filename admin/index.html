@@ -23,6 +23,36 @@
 	</head>
 	<body class="admin">
 
+
+		<div class="blackout editShow">
+			<div class="wrap">
+				<span class="glyphicon glyphicon-remove closePopup"></span>
+				<div class="content">
+					<!-- <h3><span class="addOrEdit">Add New / Edit</span> Show</h3> -->
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Add new show</h3>
+						</div>
+						<div class="panel-body">
+							<div class="form-group">
+								<label for="email">Email address</label>
+								<input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+							</div>
+							<div class="form-group">
+								<label for="password">Password</label>
+								<input type="password" class="form-control" id="password" placeholder="Password">
+							</div>
+							<button class="btn btn-primary" id="submitLogin">Submit</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
 		    	<div class="navbar-header">
@@ -64,7 +94,7 @@
 								LOGIN
 			======================================== -->
 			 
-			<section class="login row">
+			<section class="login">
 				<div class="col-md-4 col-md-offset-4">
 
 					<div class="panel panel-default">
@@ -95,7 +125,7 @@
 					INDEX (Landing after login)
 			======================================== -->
 			
-			<section class="index row">
+			<section class="index">
 				<div class="col-md-10 col-md-offset-1">
 					<div class="jumbotron">
 						<h1>Hello <span id="userIntro">user</span>!</h1>
@@ -113,7 +143,7 @@
 						Site section: HERO
 			======================================== -->
 
-			<section class="hero row">
+			<section class="hero">
 				<div class="col-md-10 col-md-offset-1">
 					<h1>Hero</h1>
 
@@ -145,9 +175,7 @@
 								<input type="text" for="buttonText" class="form-control" placeholder="loading...">
 							</div>
 						</div>
-
-						<br>
-						<button class="btn btn-lg btn-default pull-right" id="submitHero">Save</button>
+						<button class="btn btn-sm btn-primary pull-right" id="submitHero">SAVE</button>
 
 					</div>
 
@@ -160,10 +188,11 @@
 						Site section: VIDEOS
 			======================================== -->
 
-			<section class="videos row">
+			<section class="videos">
 				<div class="col-md-10 col-md-offset-1">
 					<h1>Videos</h1>
 					<p>Navigate to your YouTube channel and copy the last part of the url after 'channel/' and paste below. This will put the last 12 videos that were uploaded to your YouTube channel onto your website.</p>
+					<br>
 					<div class="form-horizontal">
 						<div class="form-group">
 							<label class="col-sm-4 control-label">https://www.youtube.com/channel/</label>
@@ -171,8 +200,7 @@
 								<input for="youtube_id" type="text" class="form-control" placeholder="loading..." value="tight">
 							</div>
 						</div>
-						<br>
-						<button class="btn btn-lg btn-default pull-right" id="submitVideos">Save</button>
+						<button class="btn btn-sm btn-primary pull-right" id="submitVideos">SAVE</button>
 					</div>
 				</div>
 			</section>
@@ -185,11 +213,32 @@
 						Site section: SHOWS
 			======================================== -->
 
-			<section class="shows row">
+			<section class="shows">
 				<div class="col-md-10 col-md-offset-1">
 					<h1>Shows</h1>
-					<p>List of all shows, with an ability to add new, edit existing, and delete existing. Maybe use a pop-up box for all adding/editing/deleteing.</p>
-					<p class="box">Click the page to see all the shows in the database right heerrrrr :D</p>
+					<div class="col-md-6">
+						<p>Click on a show to update.</p>
+					</div>
+					<div class="col-md-6">
+						<div class="btn btn-sm btn-success pull-right" id="addNewShow"><span class="glyphicon glyphicon-plus white" aria-hidden="true"></span>&nbsp;&nbsp;ADD NEW SHOW</div>
+					</div>
+					<table class="table table-hover showsList">
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Venue</th>
+								<th>City</th>
+								<th>State</th>
+								<th>Band</th>
+								<th>Type</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Loading shows...</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</section>
 
@@ -202,7 +251,7 @@
 						Site section: ABOUT
 			======================================== -->
 
-			<section class="about row">
+			<section class="about">
 				<div class="col-md-10 col-md-offset-1">
 					<h1>About</h1>
 					<p>For now: one textarea that contains markup - will improve later...</p>
@@ -216,7 +265,7 @@
 						Site section: CONTACT
 			======================================== -->
 
-			<section class="contact row">
+			<section class="contact">
 				<div class="col-md-10 col-md-offset-1">
 					<h1>Contact</h1>
 					<p>Inputs for: contact email, youtube, linkedin, facebook, twitter, &amp; instagram</p>
