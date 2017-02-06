@@ -71,9 +71,11 @@ body.admin .btn.btn-sm {
 				padding-right: 0;
 			}
 
-			.show-form-input[key="state"]{
-				text-transform: uppercase;
+			body.admin .blackout.editShow .wrap .panel-title {
+				color: #6f6f6f;
+				font-size: 18px;
 			}
+
 
 
 
