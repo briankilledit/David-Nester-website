@@ -1,10 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+
+	<head profile="http://www.w3.org/2005/10/profile">
+		<link rel="icon" type="image/ico" href="content/img/favicon.ico">
 		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="description" content="David Nester Drums - Official Website. David Nester is an experienced, knowledgeable, and well-traveled drummer from Dayton, Ohio. His background includes professional drumming for many genres ranging from: Metal - Mychildren Mybride, Wolves at the Gate, Once Nothing, Body Harvest. Rock/Pop - My Name In Vain, Me In The Making, Marilyn Avenue, To No End. Country - Pistol Holler, The Billy Brown Band, The Jason Owens Band. He is also a well-versed drum tech traveling with bands such as All That Remains. Booking Inquiries can be sent to me@davidnester.com">
+		<meta name="description" content="David Nester Drums - Official Website.">
 
 		<title>David Nester Drums</title>
 

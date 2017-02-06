@@ -6,8 +6,8 @@
 
 	// Constants
 	// ===================================
-	var PARSE_ID = "edbfdd6e-d9d4-4231-a614-41a72f87fe1f";
-	var PARSE_SERVER_URL = 'https://api.parse.buddy.com/parse/';
+	const PARSE_ID = "edbfdd6e-d9d4-4231-a614-41a72f87fe1f";
+	const PARSE_SERVER_URL = 'https://api.parse.buddy.com/parse/';
 
 
 
@@ -23,6 +23,7 @@
 	// ===================================
 	function initApp(){
 		bindEvents();
+		calenderForm();
 		Parse.initialize(PARSE_ID);
 		Parse.serverURL = PARSE_SERVER_URL;
 		checkUser();
@@ -128,22 +129,16 @@
 						var newShow = {};
 						newShow.id = results[i].id;
 						newShow.date = results[i].get('date');
-						newShow.dateObj = createDateObj(newShow.date);
+						newShow.dateObj = results[i].get('dateObj');
+						newShow.day = results[i].get('day');
+						newShow.month = results[i].get('month');
+						newShow.year = results[i].get('year');
 						newShow.venue = results[i].get('venue');
 						newShow.city = results[i].get('city');
 						newShow.state = results[i].get('state');
 						newShow.band = results[i].get('band');
 						newShow.type = results[i].get('type');
-
 						shows.push(newShow);
-
-						results[i].set('dateObj', newShow.dateObj);
-						results[i].save().then(function($obj) {
-							// console.log("Save dateObj successful!", $obj);
-						}, function($error) {
-							console.log("Save dateObj failed", $error);
-						});
-
 					}
 					populateShowsList();
 				},
@@ -260,29 +255,152 @@
 
 		$(".showsList tbody tr").bind('click', function(){
 			var thisId = $(this).attr("showId");
-			editShowPopup(thisId);
+			showsPopup.fadeIn(thisId);
 		});
-
-
 
 	};
 
 
-	function editShowPopup($showId){
 
-		animatePopup(function(){
+
+	var showsPopup = {
+		fadeIn : function($showId){
 			if($showId){
-				console.log("Edit show: " + $showId);
+				$(".addOrEdit").html("Edit");
+				$(".editShow").attr("data-show-id", $showId);
+				populateShowsForm($showId, function(){
+					$(".blackout.editShow").fadeIn(300);
+				});
 			} else {
-				console.log("Adding new show!");
+				$(".addOrEdit").html("Add New");
+				$(".blackout.editShow").fadeIn(300);
 			}
+		},
+		fadeOut : function(){
+			$(".blackout.editShow").fadeOut(300, function(){
+				$(".editShow .show-form-input").each(function(){
+					$(this).closest(".form-group").removeClass("has-error");
+					$(this).val("");
+					$(".editShow").attr("data-show-id", "")
+				});
+			});
+		}
+	};
+
+
+
+	function populateShowsForm($showId, $func){
+
+		$(".editShow").attr("data-show-id", $showId);
+
+		for(var i = 0; i < shows.length; i++){
+			if(shows[i].id == $showId){
+				for(var key in shows[i]){
+					$(".editShow .show-form-input[key='" + key + "']").val(shows[i][key]);
+				}
+				break;
+			}
+		}
+
+		if($func){
+			$func();
+		}
+
+	};
+
+
+
+
+	function saveShowForm(){
+
+		var formVals 		= {},
+			missingFields	= [],
+			showId 			= $(".editShow").attr("data-show-id");
+
+		$(".editShow .show-form-input").each(function(){
+
+			var value	 = null,
+				thisKey  = $(this).attr("key");
+
+			if($(this).is("select")){
+				value = $(this).find(":selected").attr("value");
+			} else {
+				value = $(this).val();
+			}
+
+			if( !value || parseInt(value) < 1 ){
+				missingFields.push(thisKey);
+				$(this).closest('.form-group').addClass("has-error");
+			} else {
+				formVals[thisKey] = value;
+				$(this).closest('.form-group').removeClass("has-error");
+			}
+
+
+		}).promise().done(function(){
+
+			if(missingFields.length > 0){
+				var onlyOne = missingFields.length > 1 ? "s" : "";
+				alert("You are missing " + missingFields.length + " field" + onlyOne + "!");
+			} else {
+
+				var formtattedYear = formVals.year.slice(-2);
+				formVals.date = formVals.month + "/" + formVals.day + "/" + formtattedYear;
+				formVals.dateObj = createDateObj(formVals.date);
+
+				if(!showId){
+					var NewShow = Parse.Object.extend("Shows");
+					var newshow = new NewShow();
+					newshow.set(formVals);
+					// for(var key in formVals){
+					// 	newshow.set(key, formVals[key]);
+					// }
+					newshow.save(null, {
+						success: function($newshow) {
+							var toClose = confirm("New show successfully saved!");
+							if(toClose){
+								showsPopup.fadeOut();
+								updateView("shows");
+							}
+						},
+						error: function($newshow, $error) {
+							alert('Failed to create new object, with error code: ' + $error.message);
+						}
+					});
+				} else {
+					var query = new Parse.Query('Shows');
+					query.find({
+						success: function($results) {
+							for(var i = 0; i < $results.length; i++) {
+								if($results[i].id == showId){
+									$results[i].set(formVals);
+									// for(key in formVals){
+									// 	$results[i].set(key, formVals[key]);
+									// };
+									$results[i].save().then(function($obj) {
+										var toClose = confirm("This show successfully updated!");
+										if(toClose){
+											showsPopup.fadeOut();
+											updateView("shows");
+										}
+									}, function($error) {
+										alert("Save failed");
+									});
+								}
+							}
+						},
+						error: function(error) {
+							console.log("Error: " + error.code + " " + error.message);
+						}
+					});
+				}
+
+			}
+
 		});
 	};
 
 
-	function animatePopup($func){
-		$func();
-	}
 
 
 
@@ -296,6 +414,51 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+	// var alert = {
+	// 	loader : function(){}
+	// 	killLoader : function(){}
+	// };
+
+
+
+	function calenderForm(){
+
+		var monthInput 	= $('.show-form-input[key="month"]'),
+			dayInput 	= $('.show-form-input[key="day"]'),
+			yearInput 	= $('.show-form-input[key="year"]'),
+			stateInput 	= $('.show-form-input[key="state"]'),
+			thisYear	= new Date().getFullYear(),
+			days		= 31,
+			months      = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
+			states		= [ "AL", "AK", "AS", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FM", "FL", "GA", "GU", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MH", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "MP", "OH", "OK", "OR", "PW", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VI", "VA", "WA", "WV", "WI", "WY" ];
+
+		for(var i = (thisYear-10); i <= (thisYear+10); i++){
+			yearInput.append("<option value='" + i + "'>" + i + "</option>");
+		}
+		for(var i = 1; i <= days; i++){
+			dayInput.append("<option value='" + i + "'>" + i + "</option>");
+		}
+		for(var i = 0; i < months.length; i++){
+			monthInput.append("<option value='" + (i+1) + "'>" + months[i] + "</option>");
+		}
+		for(var i = 0; i < states.length; i++){
+			stateInput.append("<option value='" + states[i] + "'>" + states[i] + "</option>");
+		}
+
+
+	};
 
 	function bindEvents(){
 
@@ -305,6 +468,10 @@
 			if(view){
 				updateView(view);
 			}
+		});
+
+		$(".closePopup").on('click', function(){
+			showsPopup.fadeOut();
 		});
 
 		$("#logout").on('click', function(){
@@ -330,7 +497,11 @@
 		});
 		
 		$("#addNewShow").on('click', function(){
-			editShowPopup();
+			showsPopup.fadeIn();
+		});
+
+		$("#saveShow").on('click', function(){
+			saveShowForm();
 		});
 
 	};

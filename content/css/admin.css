@@ -66,6 +66,16 @@ body.admin .btn.btn-sm {
 			}
 
 
+			body.admin .blackout.editShow .wrap .panel-body {
+				padding-left: 0;
+				padding-right: 0;
+			}
+
+			.show-form-input[key="state"]{
+				text-transform: uppercase;
+			}
+
+
 
 
 
