@@ -44,7 +44,7 @@
 						<li><a href="#video">Videos</a></li>
 						<li><a href="#dates">Dates</a></li>
 						<li><a href="#about">About</a></li>
-						<li class="button"><a href="mailto:me@davidnester.com">Email Now</a></li>
+						<li class="button"><a href="<?php show($contactItems,'email'); ?>">Email Now</a></li>
 					</ul>
 					<div class="hamburger">
 						<span class="hamSlice"></span>
@@ -60,7 +60,7 @@
 				<li><a href="#video">Videos</a></li>
 				<li><a href="#dates">Dates</a></li>
 				<li><a href="#about">About</a></li>
-				<li class="button"><a href="mailto:me@davidnester.com">Email Now</a></li>
+				<li class="button"><a href="<?php show($contactItems,'email'); ?>">Email Now</a></li>
 			</ul>
 		</div>
 
@@ -68,7 +68,7 @@
 			<div class="content">
 				<h1><?php show($heroItems,'title'); ?></h1>
 				<h2><?php show($heroItems,'subtitle'); ?></h2>
-				<div class="button"><a href="mailto:me@davidnester.com" target="_blank"><?php show($heroItems,'buttonText'); ?></a></div>
+				<div class="button"><a href="<?php show($contactItems,'email'); ?>" target="_blank"><?php show($heroItems,'buttonText'); ?></a></div>
 			</div>
 		</div>
 
@@ -93,7 +93,6 @@
 			</div>
 		</div>
 
-
 		<div id="dates" class="wrapper">
 			<div class="content">
 				<h1>Dates</h1>
@@ -109,13 +108,14 @@
 					<tbody>
 
 						<?php 
-							foreach ($showItems as $show)
+							foreach ($showItems as $show){
 								echo "<tr>
 										<td>" . $show["date"] . "</td>
 										<td>" . $show["venue"] . "<br>" . $show["city"] . ", " . $show["state"] . "</td>
 										<td>" . $show["band"] . "</td>
 										<td class='perf'>" . $show["type"] . "</td>
 									</tr>";
+							}
 						?>
 
 					</tbody>
@@ -123,22 +123,10 @@
 			</div>
 		</div>
 
-
 		<div id="about" class="wrapper">
 			<div class="content">
 				<h1>About</h1>
-
 				<?php echo $aboutText; ?>
-
-				<!-- <p>David Nester is an experienced, knowledgeable, and well-traveled drummer from Dayton, Ohio.</p>
-				<p>His background includes professional drumming for many genres ranging from:</p>
-				<ul>
-					<li>Metal - Mychildren Mybride, Wolves at the Gate, Once Nothing, Body Harvest</li>
-					<li>Rock/Pop - My Name In Vain, Me In The Making, Marilyn Avenue, To No End</li>
-					<li>Country - Pistol Holler, The Billy Brown Band, The Jason Owens Band</li>
-				</ul>
-				<p>Drum tech experience includes traveling with bands such as All That Remains, Whitechapel, Atreyu, and Bury Your Dead.</p>
-				<p>Booking Inquiries can be sent to <a href="mailto:me@davidnester.com">me@davidnester.com</a></p> -->
 			</div>
 		</div>
 
@@ -149,25 +137,15 @@
 				</div>
 				<div class="foot-right">
 					<div class="socMed">
-						<a href="mailto:me@davidnester.com" target="_blank" class="email" alt="Send email to me@davidnester.com"><img src="content/img/icon_email_w.png"></a>
-						<a href="https://www.youtube.com/channel/UCbVWA6H1P0wED_-fKFLj0yg" target="_blank" class="youtube"><img src="content/img/icon_youtube_w.png"></a>
-						<a href="https://www.linkedin.com/pub/david-nester/91/628/804" target="_blank" class="linkedin"><img src="content/img/icon_linkedIn_w.png"></a>
-						<a href="https://www.facebook.com/david.nester.16" target="_blank" class="facebook"><img src="content/img/icon_facebook_w.png"></a>
-						<a href="https://twitter.com/thenestea/" target="_blank" class="twitter"><img src="content/img/icon_twitter_w.png"></a>
-						<a href="https://instagram.com/davidnester/" target="_blank" class="instagram"><img src="content/img/icon_instagram_w.png"></a>
+						<?php 
+							foreach ($contactItems as $key => $value){
+								echo "<a href='" . $value . "' target='_blank' class='" . $key . "'><img src='content/img/icon_" . $key . "_w.png'></a>";
+							}
+						?>
 					</div>
 				</div>
 			</div>
 		</div>
-
-
-
-
-
-
-
-
-
 
 	</body>
 </html>

@@ -91,7 +91,7 @@ $(document).ready(function(){
 		$.get(
 			'https://www.googleapis.com/youtube/v3/playlistItems',{
 				part: 'snippet',
-				maxResults: 12,
+				maxResults: 6,
 				playlistId: $pid,
 				key: apiKey }
 		).done(function(data){

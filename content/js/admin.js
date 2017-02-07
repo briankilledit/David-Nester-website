@@ -157,7 +157,82 @@
 					console.log("Error: " + error.code + " " + error.message);
 				}
 			});
+		},
+		contact : function(){
+			var query = new Parse.Query('Contact');
+			query.first({
+				success: function($result) {
+					var contactInfo = {};
+					contactInfo.email = $result.get('email');
+					contactInfo.youtube = $result.get('youtube');
+					contactInfo.facebook = $result.get('facebook');
+					contactInfo.linkedin = $result.get('linkedin');
+					contactInfo.twitter = $result.get('twitter');
+					contactInfo.instagram = $result.get('instagram');
+					populateContactForm(contactInfo);
+				},
+				error: function(error) {
+					console.log("Error: " + error.code + " " + error.message);
+				}
+			});
 		}
+	};
+
+
+
+
+
+
+	// ============================================
+	// 				CONTACT SECTION 
+	// ============================================
+
+	function populateContactForm($contactInfo){
+		$("section.contact input").each(function(){
+			var thisFor = $(this).attr("for");
+			var thisValue = $contactInfo[thisFor];
+			$(this).val(thisValue);
+			$(this).attr("placeholder", "");
+		});
+	};
+
+	function saveContactForm(){
+		var emptyFields = 0;
+		var formVals = {};
+		$("section.contact input").each(function(){
+			var thisFor = $(this).attr("for");
+			var thisVal = $(this).val();
+			if(thisVal.length > 0){
+				formVals[thisFor] = thisVal;
+				$(this).closest('.form-group').removeClass("has-error");
+			} else {
+				emptyFields++;
+				$(this).closest('.form-group').addClass("has-error");
+				$(this).attr("placeholder", "I need info now, please, c'mon...");
+			}
+		}).promise().done(function(){
+			if(emptyFields > 0){
+				alert("You are missing some fields in the form!");
+			} else {
+				var query = new Parse.Query("Contact");
+				query.first({
+					success: function($result) {
+						$result.set(formVals);
+						$result.save().then(function($obj) {
+							alert("Save successful!");
+							updateView("contact");
+						}, function($error) {
+							alert("Save failed");
+							updateView("contact");
+						});
+					},
+					error: function(error) {
+						console.log("Error: " + error.code + " " + error.message);
+					}
+				});
+			}
+		});
+
 	};
 
 
@@ -172,28 +247,27 @@
 
 	function saveAboutForm(){
 		var textareaVal = $("textarea[for='aboutText']").val();
-		var query = new Parse.Query("About");
-		query.first({
-			success: function($result) {
-				$result.set("aboutText", textareaVal);
-				$result.save().then(function($obj) {
-					alert("Save successful!");
-					updateView("about");
-				}, function($error) {
-					alert("Save failed");
-					window.location.reload();
-				});
-			},
-			error: function(error) {
-				console.log("Error: " + error.code + " " + error.message);
-			}
-		});
+		if(textareaVal.length > 0){
+			var query = new Parse.Query("About");
+			query.first({
+				success: function($result) {
+					$result.set("aboutText", textareaVal);
+					$result.save().then(function($obj) {
+						alert("Save successful!");
+						updateView("about");
+					}, function($error) {
+						alert("Save failed");
+						window.location.reload();
+					});
+				},
+				error: function(error) {
+					console.log("Error: " + error.code + " " + error.message);
+				}
+			});
+		} else {
+			alert("Please enter SOMETHING!");
+		}
 	};
-
-
-
-
-
 
 
 
@@ -237,11 +311,6 @@
 	};
 
 
-
-
-
-
-
 	// ============================================
 	// 				VIDEO SECTION 
 	// ============================================
@@ -263,9 +332,6 @@
 			}
 		});
 	};
-
-
-
 
 
 
@@ -415,11 +481,9 @@
 								if($results[i].id == showId){
 									$results[i].set(formVals);
 									$results[i].save().then(function($obj) {
-										var toClose = confirm("This show successfully updated!");
-										if(toClose){
-											showsPopup.fadeOut();
-											updateView("shows");
-										}
+										alert("This show successfully updated!");
+										showsPopup.fadeOut();
+										updateView("shows");
 									}, function($error) {
 										alert("Save failed");
 									});
@@ -558,6 +622,10 @@
 
 		$("#submitAbout").on('click', function(){
 			saveAboutForm();
+		});
+
+		$("#submitContact").on('click', function(){
+			saveContactForm();
 		});
 
 	};

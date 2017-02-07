@@ -53,10 +53,10 @@ $youtubeId = $videoResult->get('youtube_id');
 // ====================================
 
 $showItems = array();
-$today = new DateTime('yesterday');
+$yesterday = new DateTime('yesterday');
 
 $showQuery = new ParseQuery("Shows");
-$showQuery->greaterThan("dateObj", $today);
+$showQuery->greaterThan("dateObj", $yesterday);
 $showQuery->ascending("dateObj");
 $showResults = $showQuery->find();
 for ($i = 0; $i < count($showResults); $i++) {
@@ -80,7 +80,20 @@ $aboutText = $aboutResult->get('aboutText');
 
 
 
+// Get contact items
+// ====================================
 
+$contactItems = array();
+
+$contactQuery = new ParseQuery("Contact");
+$contactResult = $contactQuery->first();
+
+$contactItems['email'] = "mailto:" . $contactResult->get('email');
+$contactItems['youtube'] = $contactResult->get('youtube');
+$contactItems['linkedin'] = $contactResult->get('linkedin');
+$contactItems['facebook'] = $contactResult->get('facebook');
+$contactItems['twitter'] = $contactResult->get('twitter');
+$contactItems['instagram'] = $contactResult->get('instagram');
 
 
 
