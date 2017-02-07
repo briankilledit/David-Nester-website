@@ -91,7 +91,9 @@ body.admin .btn.btn-sm {
 	}
 
 
-	body.admin .container {}
+	body.admin .container {
+		margin-bottom: 80px;
+	}
 
 
 
@@ -101,7 +103,6 @@ body.admin .btn.btn-sm {
 
 		body.admin section {
 			display: none;
-			margin-bottom: 60px;
 		}
 
 		body.admin section h1 {

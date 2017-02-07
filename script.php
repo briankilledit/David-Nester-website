@@ -53,8 +53,10 @@ $youtubeId = $videoResult->get('youtube_id');
 // ====================================
 
 $showItems = array();
+$today = new DateTime('yesterday');
 
 $showQuery = new ParseQuery("Shows");
+$showQuery->greaterThan("dateObj", $today);
 $showQuery->ascending("dateObj");
 $showResults = $showQuery->find();
 for ($i = 0; $i < count($showResults); $i++) {

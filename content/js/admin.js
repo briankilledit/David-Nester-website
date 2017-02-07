@@ -248,20 +248,21 @@
 
 		$(".showsList tbody").empty().promise().done(function(){
 			for(var i = 0; i < shows.length; i++){
-				var thisShowRow = "<tr showId='" + shows[i].id + "'><td>" + shows[i].date + "</td><td>" + shows[i].venue + "</td><td>" + shows[i].city + "</td><td>" + shows[i].state + "</td><td>" + shows[i].band + "</td><td>" + shows[i].type + "</td></tr>";
+				var thisShowRow = "<tr showid='" + shows[i].id + "'><td>" + shows[i].date + "</td><td>" + shows[i].venue + "</td><td>" + shows[i].city + "</td><td>" + shows[i].state + "</td><td>" + shows[i].band + "</td><td>" + shows[i].type + "</td><td><button class='btn btn-xs btn-danger pull-right' id='deleteShow'>Delete</button></td></tr>";
 				$(".showsList tbody").append(thisShowRow);
 			}
 		});
 
-		$(".showsList tbody tr").bind('click', function(){
-			var thisId = $(this).attr("showId");
-			showsPopup.fadeIn(thisId);
+		$(".showsList tbody tr").bind('click', function(e){
+			var thisId = $(this).attr("showid");
+			if(e.target.id == "deleteShow"){
+				deleteShow(thisId);
+			} else {
+				showsPopup.fadeIn(thisId);
+			}
 		});
 
 	};
-
-
-
 
 	var showsPopup = {
 		fadeIn : function($showId){
@@ -308,9 +309,6 @@
 
 	};
 
-
-
-
 	function saveShowForm(){
 
 		var formVals 		= {},
@@ -340,8 +338,10 @@
 		}).promise().done(function(){
 
 			if(missingFields.length > 0){
+
 				var onlyOne = missingFields.length > 1 ? "s" : "";
 				alert("You are missing " + missingFields.length + " field" + onlyOne + "!");
+
 			} else {
 
 				var formtattedYear = formVals.year.slice(-2);
@@ -352,9 +352,6 @@
 					var NewShow = Parse.Object.extend("Shows");
 					var newshow = new NewShow();
 					newshow.set(formVals);
-					// for(var key in formVals){
-					// 	newshow.set(key, formVals[key]);
-					// }
 					newshow.save(null, {
 						success: function($newshow) {
 							var toClose = confirm("New show successfully saved!");
@@ -374,9 +371,6 @@
 							for(var i = 0; i < $results.length; i++) {
 								if($results[i].id == showId){
 									$results[i].set(formVals);
-									// for(key in formVals){
-									// 	$results[i].set(key, formVals[key]);
-									// };
 									$results[i].save().then(function($obj) {
 										var toClose = confirm("This show successfully updated!");
 										if(toClose){
@@ -398,6 +392,29 @@
 			}
 
 		});
+	};
+
+	function deleteShow($thisId){
+		var checkFirst = confirm("Are you sure you want to delete this show?");
+		if(checkFirst){
+			var query = new Parse.Query('Shows');
+			query.get($thisId, {
+				success : function($obj){
+					$obj.destroy({
+						success: function() {
+							showsPopup.fadeOut();
+							updateView("shows");
+						},
+						error: function($err) {
+							alert("Delete failed!");
+						}
+					});
+				},
+				error : function($obj,$err){
+					alert("Error: " + $err);
+				}
+			});
+		}
 	};
 
 
@@ -422,17 +439,6 @@
 
 
 
-
-
-
-
-	// var alert = {
-	// 	loader : function(){}
-	// 	killLoader : function(){}
-	// };
-
-
-
 	function calenderForm(){
 
 		var monthInput 	= $('.show-form-input[key="month"]'),
@@ -444,7 +450,7 @@
 			months      = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
 			states		= [ "AL", "AK", "AS", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FM", "FL", "GA", "GU", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MH", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "MP", "OH", "OK", "OR", "PW", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VI", "VA", "WA", "WV", "WI", "WY" ];
 
-		for(var i = (thisYear-10); i <= (thisYear+10); i++){
+		for(var i = thisYear; i <= (thisYear+10); i++){
 			yearInput.append("<option value='" + i + "'>" + i + "</option>");
 		}
 		for(var i = 1; i <= days; i++){
