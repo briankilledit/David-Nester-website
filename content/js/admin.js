@@ -1,22 +1,16 @@
 (function(){ 
 	'use strict';
 
-
-
-
 	// Constants
 	// ===================================
 	const PARSE_ID = "edbfdd6e-d9d4-4231-a614-41a72f87fe1f";
 	const PARSE_SERVER_URL = 'https://api.parse.buddy.com/parse/';
-
-
 
 	// Variables
 	// ===================================
 	var hero = {};
 	var youtube_id = '';
 	var shows = [];
-
 
 	// Functions
 	// ===================================
@@ -178,11 +172,6 @@
 		}
 	};
 
-
-
-
-
-
 	// ============================================
 	// 				CONTACT SECTION 
 	// ============================================
@@ -232,10 +221,7 @@
 				});
 			}
 		});
-
 	};
-
-
 
 	// ============================================
 	// 				ABOUT SECTION 
@@ -268,8 +254,6 @@
 			alert("Please enter SOMETHING!");
 		}
 	};
-
-
 
 	// ============================================
 	// 				HERO SECTION 
@@ -310,7 +294,6 @@
 		});
 	};
 
-
 	// ============================================
 	// 				VIDEO SECTION 
 	// ============================================
@@ -333,12 +316,9 @@
 		});
 	};
 
-
-
 	// ============================================
 	// 				SHOWS LIST
 	// ============================================
-
 
 	// Simple util to return a date object from a "xx/xx/xx" style sate string
 	// -------------------------------------------------------------------------------------
@@ -397,8 +377,6 @@
 		}
 	};
 
-
-
 	function populateShowsForm($showId, $func){
 
 		$(".editShow").attr("data-show-id", $showId);
@@ -442,7 +420,6 @@
 				formVals[thisKey] = value;
 				$(this).closest('.form-group').removeClass("has-error");
 			}
-
 
 		}).promise().done(function(){
 
@@ -527,28 +504,6 @@
 		}
 	};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	function calenderForm(){
 
 		var monthInput 	= $('.show-form-input[key="month"]'),
@@ -572,7 +527,6 @@
 		for(var i = 0; i < states.length; i++){
 			stateInput.append("<option value='" + states[i] + "'>" + states[i] + "</option>");
 		}
-
 
 	};
 
@@ -630,25 +584,8 @@
 
 	};
 
-
-
-
-
-
-
-
-
-
-
-
 	$(document).on('ready', function(){
 		initApp();
 	});
 
-
-
-
 }());
-
-
-
