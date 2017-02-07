@@ -71,9 +71,12 @@ for ($i = 0; $i < count($showResults); $i++) {
 }
 
 
+// Get about content
+// ====================================
 
-
-
+$aboutQuery = new ParseQuery("About");
+$aboutResult = $aboutQuery->first();
+$aboutText = $aboutResult->get('aboutText');
 
 
 

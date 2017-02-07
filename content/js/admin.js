@@ -14,9 +14,8 @@
 	// Variables
 	// ===================================
 	var hero = {};
-	var shows = [];
 	var youtube_id = '';
-
+	var shows = [];
 
 
 	// Functions
@@ -146,8 +145,52 @@
 					console.log("Error: " + error.code + " " + error.message);
 				}
 			});
+		},
+		about : function(){
+			var query = new Parse.Query('About');
+			query.first({
+				success: function($result) {
+					var aboutText = $result.get('aboutText');
+					populateAboutForm(aboutText);
+				},
+				error: function(error) {
+					console.log("Error: " + error.code + " " + error.message);
+				}
+			});
 		}
 	};
+
+
+
+	// ============================================
+	// 				ABOUT SECTION 
+	// ============================================
+
+	function populateAboutForm($aboutText){
+		$("textarea[for='aboutText']").val($aboutText);
+	};
+
+	function saveAboutForm(){
+		var textareaVal = $("textarea[for='aboutText']").val();
+		var query = new Parse.Query("About");
+		query.first({
+			success: function($result) {
+				$result.set("aboutText", textareaVal);
+				$result.save().then(function($obj) {
+					alert("Save successful!");
+					updateView("about");
+				}, function($error) {
+					alert("Save failed");
+					window.location.reload();
+				});
+			},
+			error: function(error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+	};
+
+
 
 
 
@@ -406,12 +449,15 @@
 							updateView("shows");
 						},
 						error: function($err) {
-							alert("Delete failed!");
+							alert("Delete failed, check console for details.");
+							console.log($err);
 						}
 					});
 				},
 				error : function($obj,$err){
-					alert("Error: " + $err);
+					alert("Table query failed, check console for details.");
+					console.log($obj);
+					console.log($err);
 				}
 			});
 		}
@@ -508,6 +554,10 @@
 
 		$("#saveShow").on('click', function(){
 			saveShowForm();
+		});
+
+		$("#submitAbout").on('click', function(){
+			saveAboutForm();
 		});
 
 	};

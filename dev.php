@@ -127,7 +127,10 @@
 		<div id="about" class="wrapper">
 			<div class="content">
 				<h1>About</h1>
-				<p>David Nester is an experienced, knowledgeable, and well-traveled drummer from Dayton, Ohio.</p>
+
+				<?php echo $aboutText; ?>
+
+				<!-- <p>David Nester is an experienced, knowledgeable, and well-traveled drummer from Dayton, Ohio.</p>
 				<p>His background includes professional drumming for many genres ranging from:</p>
 				<ul>
 					<li>Metal - Mychildren Mybride, Wolves at the Gate, Once Nothing, Body Harvest</li>
@@ -135,7 +138,7 @@
 					<li>Country - Pistol Holler, The Billy Brown Band, The Jason Owens Band</li>
 				</ul>
 				<p>Drum tech experience includes traveling with bands such as All That Remains, Whitechapel, Atreyu, and Bury Your Dead.</p>
-				<p>Booking Inquiries can be sent to <a href="mailto:me@davidnester.com">me@davidnester.com</a></p>
+				<p>Booking Inquiries can be sent to <a href="mailto:me@davidnester.com">me@davidnester.com</a></p> -->
 			</div>
 		</div>
 
