@@ -76,6 +76,26 @@ body.admin .btn.btn-sm {
 				font-size: 18px;
 			}
 
+			body.admin .blackout.editShow .wrap .panel-title .addOrEdit {
+				display: block;
+				width: 100%;
+				position: relative;
+			}
+
+			body.admin .blackout.editShow .wrap .panel-title .alert {
+				padding: 5px;
+				margin: -2px 0 0 15px;
+				border-radius: 5px;
+				color: #ffffff;
+				background-color: #c9302c;
+				border: 1px solid #ac2925;
+				font-size: 11px;
+				letter-spacing: 0.03em;
+				text-transform: uppercase;
+				display: inline-block;
+				position: absolute;
+			}
+
 
 
 
@@ -150,6 +170,31 @@ body.admin .btn.btn-sm {
 						cursor: pointer;
 					}
 
+
+
+			body.admin section.shows table.showsList tr {
+				-webkit-transition: all 0.15s ease-in-out;
+				-moz-transition: all 0.15s ease-in-out;
+				-ms-transition: all 0.15s ease-in-out;
+				-o-transition: all 0.15s ease-in-out;
+				transition: all 0.15s ease-in-out;
+			}
+
+			body.admin section.shows table.showsList tr:hover {
+				-webkit-transition: none;
+				-moz-transition: none;
+				-ms-transition: none;
+				-o-transition: none;
+				transition: none;
+			}
+
+				body.admin section.shows table.showsList tr.old {
+					background-color: #EFEFEF;
+				}
+
+					body.admin section.shows table.showsList tr.old td {
+						color: #BFBFBF;
+					}
 
 
 

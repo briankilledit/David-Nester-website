@@ -6,11 +6,7 @@
 	const PARSE_ID = "edbfdd6e-d9d4-4231-a614-41a72f87fe1f";
 	const PARSE_SERVER_URL = 'https://api.parse.buddy.com/parse/';
 
-	// Variables
-	// ===================================
-	var hero = {};
-	var youtube_id = '';
-	var shows = [];
+	var currentUserFirstName = "man";
 
 	// Functions
 	// ===================================
@@ -74,9 +70,9 @@
 		if($view == "login"){
 			$("nav.navbar").hide();
 		} else {
-			var currentUser = Parse.User.current().get("fname");
+			currentUserFirstName = Parse.User.current().get("fname");
 			$("nav.navbar").show();
-			$("#user, #userIntro").html(currentUser);
+			$("#user, #userIntro").html(currentUserFirstName);
 		}
 
 		if(hitDb){
@@ -87,6 +83,8 @@
 
 	var queryTable = {
 		hero : function(){
+			$("section.hero input").attr("placeholder", "loading...");
+			var hero = {};
 			var query = new Parse.Query("Hero");
 			query.first({
 				success: function($result) {
@@ -94,7 +92,8 @@
 					hero.subtitle = $result.get("subtitle");
 					hero.buttonText = $result.get("buttonText");
 					hero.imgUrl = $result.get("imgUrl");
-					populateHeroForm();
+					populateHeroForm(hero);
+					$("section.hero input").attr("placeholder", "Please enter a value here");
 				},
 				error: function(error) {
 					console.log("Error: " + error.code + " " + error.message);
@@ -102,11 +101,13 @@
 			});
 		},
 		videos : function(){
+			$("input[for='youtube_id']").attr("placeholder", "loading...");
 			var query = new Parse.Query("Videos");
 			query.first({
 				success: function($result) {
-					youtube_id = $result.get("youtube_id");
+					var youtube_id = $result.get("youtube_id");
 					$("input[for='youtube_id']").val(youtube_id);
+					$("input[for='youtube_id']").attr("placeholder", "Please enter youtube ID here");
 				},
 				error: function(error) {
 					console.log("Error: " + error.code + " " + error.message);
@@ -114,7 +115,7 @@
 			});			
 		},
 		shows : function(){
-			shows = [];
+			var shows = [];
 			var query = new Parse.Query('Shows');
 			query.find({
 				success: function(results) {
@@ -133,7 +134,7 @@
 						newShow.type = results[i].get('type');
 						shows.push(newShow);
 					}
-					populateShowsList();
+					populateShowsList(shows);
 				},
 				error: function(error) {
 					console.log("Error: " + error.code + " " + error.message);
@@ -153,6 +154,7 @@
 			});
 		},
 		contact : function(){
+			$("section.contact input").attr("placeholder", "loading...");
 			var query = new Parse.Query('Contact');
 			query.first({
 				success: function($result) {
@@ -164,6 +166,7 @@
 					contactInfo.twitter = $result.get('twitter');
 					contactInfo.instagram = $result.get('instagram');
 					populateContactForm(contactInfo);
+					$("section.contact input").attr("placeholder", "Please enter a value here");
 				},
 				error: function(error) {
 					console.log("Error: " + error.code + " " + error.message);
@@ -197,11 +200,10 @@
 			} else {
 				emptyFields++;
 				$(this).closest('.form-group').addClass("has-error");
-				$(this).attr("placeholder", "I need info now, please, c'mon...");
 			}
 		}).promise().done(function(){
 			if(emptyFields > 0){
-				alert("You are missing some fields in the form!");
+				alert("DAMMIT " + currentUserFirstName + "! You are missing " + emptyFields + " field(s) in the form!");
 			} else {
 				var query = new Parse.Query("Contact");
 				query.first({
@@ -251,7 +253,7 @@
 				}
 			});
 		} else {
-			alert("Please enter SOMETHING!");
+			alert("Please, " + currentUserFirstName + ", you have to enter SOMETHING.");
 		}
 	};
 
@@ -259,28 +261,64 @@
 	// 				HERO SECTION 
 	// ============================================
 
-	function populateHeroForm(){
-		$("#hero-form input[type='text']").each(function(){
+	function populateHeroForm($hero){
+		$("section.hero input[type='text']").each(function(){
 			$(this).val("");
 			var forAttr = $(this).attr("for");
-			var forVal = hero[forAttr];
+			var forVal = $hero[forAttr];
 			$(this).val(forVal);
 		});
 	};
 
 	function saveHeroForm(){
-		$("#hero-form input[type='text']").each(function(){
+		var hero = {};
+		var missingFields = 0;
+		$("section.hero input[type='text']").each(function(){
 			var val = $(this).val();
 			var forAttr = $(this).attr("for");
-			hero[forAttr] = val;
+
+			if(val.length > 0){
+				hero[forAttr] = val;
+				$(this).closest(".form-group").removeClass("has-error");
+			} else {
+				missingFields++;
+				$(this).closest(".form-group").addClass("has-error");
+			}
+
 		}).promise().done(function(){
-			var query = new Parse.Query("Hero");
+			if(missingFields > 0){
+				alert("You are missing " + missingFields + " field(s) in the form. Come on " + currentUserFirstName + ".");
+			} else {
+				var query = new Parse.Query("Hero");
+				query.first({
+					success: function($result) {
+						$result.set(hero);
+						$result.save().then(function($obj) {
+							alert("Save successful!");
+						}, function($error) {
+							alert("Save failed");
+						});
+					},
+					error: function(error) {
+						console.log("Error: " + error.code + " " + error.message);
+					}
+				});
+			}
+		});
+	};
+
+	// ============================================
+	// 				VIDEO SECTION 
+	// ============================================
+
+	function saveVideosForm(){
+		var idInput = $("input[for='youtube_id']").val();
+		if(idInput.length > 0){
+			$("input[for='youtube_id']").closest(".form-group").removeClass("has-error");
+			var query = new Parse.Query("Videos");
 			query.first({
 				success: function($result) {
-					$result.set("title", hero.title);
-					$result.set("subtitle", hero.subtitle);
-					$result.set("buttonText", hero.buttonText);
-					$result.set("imgUrl", hero.imgUrl);
+					$result.set("youtube_id", idInput);
 					$result.save().then(function($obj) {
 						alert("Save successful!");
 					}, function($error) {
@@ -291,29 +329,10 @@
 					console.log("Error: " + error.code + " " + error.message);
 				}
 			});
-		});
-	};
-
-	// ============================================
-	// 				VIDEO SECTION 
-	// ============================================
-
-	function saveVideosForm(){
-		var idInput = $("input[for='youtube_id']").val();
-		var query = new Parse.Query("Videos");
-		query.first({
-			success: function($result) {
-				$result.set("youtube_id", idInput);
-				$result.save().then(function($obj) {
-					alert("Save successful!");
-				}, function($error) {
-					alert("Save failed");
-				});
-			},
-			error: function(error) {
-				console.log("Error: " + error.code + " " + error.message);
-			}
-		});
+		} else {
+			$("input[for='youtube_id']").closest(".form-group").addClass("has-error");
+			alert(currentUserFirstName + ", you need enter SOMETHING in the field, GEEZE.");
+		}
 	};
 
 	// ============================================
@@ -329,40 +348,42 @@
 
 	// Sort & populate the list in the admin with all shows from database
 	// -------------------------------------------------------------------------------------
-	function populateShowsList(){
+	function populateShowsList($shows){
+		var yesterday = (function(d){ d.setDate(d.getDate()-1); return d})(new Date);
 
-		shows.sort(function(a, b){
+		$shows.sort(function(a, b){
 			return a.dateObj - b.dateObj;
 		});
-
 		$(".showsList tbody").empty().promise().done(function(){
-			for(var i = 0; i < shows.length; i++){
-				var thisShowRow = "<tr showid='" + shows[i].id + "'><td>" + shows[i].date + "</td><td>" + shows[i].venue + "</td><td>" + shows[i].city + "</td><td>" + shows[i].state + "</td><td>" + shows[i].band + "</td><td>" + shows[i].type + "</td><td><button class='btn btn-xs btn-danger pull-right' id='deleteShow'>Delete</button></td></tr>";
+			for(var i = 0; i < $shows.length; i++){
+				var compare = $shows[i].dateObj - yesterday;
+				var oldShow = compare < 0 ? "old" : "";
+				var thisShowRow = "<tr class='" + oldShow + "' showid='" + $shows[i].id + "'><td>" + $shows[i].date + "</td><td>" + $shows[i].venue + "</td><td>" + $shows[i].city + "</td><td>" + $shows[i].state + "</td><td>" + $shows[i].band + "</td><td>" + $shows[i].type + "</td><td><button class='btn btn-xs btn-danger pull-right' id='deleteShow'>Delete</button></td></tr>";
 				$(".showsList tbody").append(thisShowRow);
 			}
 		});
-
 		$(".showsList tbody tr").bind('click', function(e){
 			var thisId = $(this).attr("showid");
+			var isOld = $(this).hasClass("old");
 			if(e.target.id == "deleteShow"){
-				deleteShow(thisId);
+				deleteShow(thisId, $shows);
 			} else {
-				showsPopup.fadeIn(thisId);
+				showsPopup.fadeIn(thisId, isOld, $shows);
 			}
 		});
-
 	};
 
 	var showsPopup = {
-		fadeIn : function($showId){
+		fadeIn : function($showId, $isOld, $shows){
 			if($showId){
-				$(".addOrEdit").html("Edit");
+				var msg = $isOld ? "Edit Show <span class='alert'>Warning: This is show is old</span>" : "Edit Show";
+				$(".addOrEdit").html(msg);
 				$(".editShow").attr("data-show-id", $showId);
-				populateShowsForm($showId, function(){
+				populateShowsForm($showId, $shows, function(){
 					$(".blackout.editShow").fadeIn(300);
 				});
 			} else {
-				$(".addOrEdit").html("Add New");
+				$(".addOrEdit").html("Add New Show");
 				$(".blackout.editShow").fadeIn(300);
 			}
 		},
@@ -377,14 +398,14 @@
 		}
 	};
 
-	function populateShowsForm($showId, $func){
+	function populateShowsForm($showId, $shows, $func){
 
 		$(".editShow").attr("data-show-id", $showId);
 
-		for(var i = 0; i < shows.length; i++){
-			if(shows[i].id == $showId){
-				for(var key in shows[i]){
-					$(".editShow .show-form-input[key='" + key + "']").val(shows[i][key]);
+		for(var i = 0; i < $shows.length; i++){
+			if($shows[i].id == $showId){
+				for(var key in $shows[i]){
+					$(".editShow .show-form-input[key='" + key + "']").val($shows[i][key]);
 				}
 				break;
 			}
@@ -478,7 +499,7 @@
 		});
 	};
 
-	function deleteShow($thisId){
+	function deleteShow($thisId, $shows){
 		var checkFirst = confirm("Are you sure you want to delete this show?");
 		if(checkFirst){
 			var query = new Parse.Query('Shows');
