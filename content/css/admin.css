@@ -115,6 +115,17 @@ body.admin .btn.btn-sm {
 		margin-bottom: 80px;
 	}
 
+		body.admin nav .navbar-brand {}
+
+			body.admin nav .navbar-brand img {
+				width: 25px;
+				height: auto;
+				display: inline-block;
+				position: relative;
+				top: -2px;
+				margin-right: 8px;
+			}
+
 
 
 		/* ---------------------------

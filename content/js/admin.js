@@ -107,7 +107,7 @@
 				success: function($result) {
 					var youtube_id = $result.get("youtube_id");
 					$("input[for='youtube_id']").val(youtube_id);
-					$("input[for='youtube_id']").attr("placeholder", "Please enter youtube ID here");
+					$("input[for='youtube_id']").attr("placeholder", "Please enter youtube channel ID here");
 				},
 				error: function(error) {
 					console.log("Error: " + error.code + " " + error.message);
@@ -142,11 +142,13 @@
 			});
 		},
 		about : function(){
+			$("section.about textarea").attr("placeholder", "loading...");
 			var query = new Parse.Query('About');
 			query.first({
 				success: function($result) {
 					var aboutText = $result.get('aboutText');
 					populateAboutForm(aboutText);
+					$("section.about textarea").attr("placeholder", "Please enter content here");
 				},
 				error: function(error) {
 					console.log("Error: " + error.code + " " + error.message);
@@ -354,6 +356,7 @@
 		$shows.sort(function(a, b){
 			return a.dateObj - b.dateObj;
 		});
+
 		$(".showsList tbody").empty().promise().done(function(){
 			for(var i = 0; i < $shows.length; i++){
 				var compare = $shows[i].dateObj - yesterday;
