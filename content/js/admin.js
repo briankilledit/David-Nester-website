@@ -13,6 +13,7 @@
 	function initApp(){
 		bindEvents();
 		calenderForm();
+		initCKeditor();
 		Parse.initialize(PARSE_ID);
 		Parse.serverURL = PARSE_SERVER_URL;
 		checkUser();
@@ -552,6 +553,10 @@
 			stateInput.append("<option value='" + states[i] + "'>" + states[i] + "</option>");
 		}
 
+	};
+
+	function initCKeditor(){
+		CKEDITOR.inline('aboutTextEditor');
 	};
 
 	function bindEvents(){
