@@ -2,6 +2,7 @@
 
 * {
 	color: #6f6f6f;
+	outline: transparent;
 }
 
 body.admin {
@@ -95,10 +96,6 @@ body.admin .btn.btn-sm {
 				display: inline-block;
 				position: absolute;
 			}
-
-
-
-
 
 
 
