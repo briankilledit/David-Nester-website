@@ -221,8 +221,85 @@ body.admin .btn.btn-sm {
 			}
 
 
+			body.admin section.about #aboutTextEditor {
+				outline: transparent;
+				box-sizing: border-box;
+				display: block;
+				width: 100%;
+				padding: 15px 15px 8px 15px;
+				margin-top: 10px;
+				font-size: 14px;
+				line-height: 1.4em;
+				background-color: #EFEFEF;
+				background-image: none;
+				border: 1px solid #cccccc;
+				border-radius: 4px;
+				-webkit-user-select: none; /* Chrome/Safari */        
+				-moz-user-select: none; /* Firefox */
+				-ms-user-select: none; /* IE10+ */
+				-o-user-select: none;
+				user-select: none;
+			}
 
+			body.admin section.about #aboutTextEditor p,
+			body.admin section.about #aboutTextEditor ul,
+			body.admin section.about #aboutTextEditor ol,
+			body.admin section.about #aboutTextEditor ul li,
+			body.admin section.about #aboutTextEditor ol li {
+				color: #BFBFBF;
+			}
 
+			body.admin section.about #aboutTextEditor a {
+				text-decoration: underline;
+			}
+
+				body.admin section.about #aboutTextEditor.ready {
+					background-color: #ffffff;
+					-webkit-user-select: text; /* Chrome/Safari */        
+					-moz-user-select: text; /* Firefox */
+					-ms-user-select: text; /* IE10+ */
+					-o-user-select: text;
+					user-select: text;
+				}
+
+				body.admin section.about #aboutTextEditor.ready p,
+				body.admin section.about #aboutTextEditor.ready ul,
+				body.admin section.about #aboutTextEditor.ready ol,
+				body.admin section.about #aboutTextEditor.ready ul li,
+				body.admin section.about #aboutTextEditor.ready ol li {
+					color: #555555;
+				}
+
+				body.admin section.about .form-group #aboutTextEditor:focus {
+					border-color: #66afe9;
+					outline: 0;
+					-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+					-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+					-ms-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+					-o-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+					box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+				}
+
+					body.admin section.about .form-group.has-error #aboutTextEditor {
+						border-color: #a94442;
+					}
+					body.admin section.about .form-group.has-error #aboutTextEditor:focus { 
+						-webkit-box-shadow: inset 0 1px 1px #a94442,0 0 8px #a94442;
+						-moz-box-shadow: inset 0 1px 1px #a94442,0 0 8px #a94442;
+						-ms-box-shadow: inset 0 1px 1px #a94442,0 0 8px #a94442;
+						-o-box-shadow: inset 0 1px 1px #a94442,0 0 8px #a94442;
+						box-shadow: inset 0 1px 1px #a94442,0 0 8px #a94442;
+					}
+
+					body.admin section.about .form-group.has-error p { color: #a94442; }
+					body.admin section.about .form-group.has-error #aboutTextEditor p { color: #555555; }
+
+				/*
+				* Fixed styles for inline editor
+				*/
+				#cke_17 {
+					display: none;
+				}
 
 
 

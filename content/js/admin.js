@@ -13,10 +13,12 @@
 	function initApp(){
 		bindEvents();
 		calenderForm();
-		initCKeditor();
 		Parse.initialize(PARSE_ID);
 		Parse.serverURL = PARSE_SERVER_URL;
-		checkUser();
+		CKEDITOR.inline('aboutTextEditor');
+		CKEDITOR.on("instanceReady", function(event){
+			checkUser();
+		});
 	};
 
 	function checkUser(){
@@ -143,13 +145,14 @@
 			});
 		},
 		about : function(){
-			$("section.about textarea").attr("placeholder", "loading...");
+			$("#aboutTextEditor").removeClass('ready');
+			$("#aboutTextEditor").html("<p>Loading...</p>");
 			var query = new Parse.Query('About');
 			query.first({
 				success: function($result) {
 					var aboutText = $result.get('aboutText');
+					$("#aboutTextEditor").addClass('ready');
 					populateAboutForm(aboutText);
-					$("section.about textarea").attr("placeholder", "Please enter content here");
 				},
 				error: function(error) {
 					console.log("Error: " + error.code + " " + error.message);
@@ -233,17 +236,18 @@
 	// ============================================
 
 	function populateAboutForm($aboutText){
-		$("textarea[for='aboutText']").val($aboutText);
+		$("#aboutTextEditor").html($aboutText);
 	};
 
 	function saveAboutForm(){
-		var textareaVal = $("textarea[for='aboutText']").val();
-		if(textareaVal.length > 0){
+		var textareaVal = $("#aboutTextEditor").html();
+		if(textareaVal.length > 11){
 			var query = new Parse.Query("About");
 			query.first({
 				success: function($result) {
 					$result.set("aboutText", textareaVal);
 					$result.save().then(function($obj) {
+						$("#about-form .form-group").removeClass('has-error');
 						alert("Save successful!");
 						updateView("about");
 					}, function($error) {
@@ -256,6 +260,7 @@
 				}
 			});
 		} else {
+			$("#about-form .form-group").addClass('has-error');
 			alert("Please, " + currentUserFirstName + ", you have to enter SOMETHING.");
 		}
 	};
@@ -553,10 +558,6 @@
 			stateInput.append("<option value='" + states[i] + "'>" + states[i] + "</option>");
 		}
 
-	};
-
-	function initCKeditor(){
-		CKEDITOR.inline('aboutTextEditor');
 	};
 
 	function bindEvents(){
