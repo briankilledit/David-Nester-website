@@ -99,7 +99,7 @@
 				<table>
 					<thead>
 						<tr>
-							<td class="headerRow">Date(s)</td>
+							<td class="headerRow">Date</td>
 							<td class="headerRow">Location</td>
 							<td class="headerRow">Band</td>
 							<td class="headerRow perf">Type</td>
