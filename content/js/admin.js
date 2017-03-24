@@ -46,7 +46,7 @@
 				updateView('index');
 			},
 			error: function($user, $err) {
-				alert($err.message);
+				pop.alert($err.message);
 			}
 		});
 	};
@@ -55,6 +55,34 @@
 		Parse.User.logOut().then(function(){
 			location.reload();
 		});
+	};
+
+	var pop = {
+		show: function($func){
+			$(".blackout.alert").fadeIn();
+		},
+		hide: function(){
+			$(".blackout.alert").fadeOut();
+		},
+		alert: function($text){
+
+			var thisFor;
+
+			$text = $text ? $text : "Are you sure?";
+
+			$(".blackout.alert .panel-body p").html($text).promise().done(function(){
+				pop.show();
+			});
+
+			$(".blackout.alert .panel-body .btn").on('click', function(){
+				pop.hide();
+				thisFor = $(this).attr("for") == "confirm";
+
+				return thisFor;
+				
+			});
+
+		}
 	};
 
 	function updateView($view){
@@ -209,17 +237,17 @@
 			}
 		}).promise().done(function(){
 			if(emptyFields > 0){
-				alert("DAMMIT " + currentUserFirstName + "! You are missing " + emptyFields + " field(s) in the form!");
+				pop.alert("DAMMIT " + currentUserFirstName + "! You are missing " + emptyFields + " field(s) in the form!");
 			} else {
 				var query = new Parse.Query("Contact");
 				query.first({
 					success: function($result) {
 						$result.set(formVals);
 						$result.save().then(function($obj) {
-							alert("Save successful!");
+							pop.alert("Save successful!");
 							updateView("contact");
 						}, function($error) {
-							alert("Save failed");
+							pop.alert("Save failed");
 							updateView("contact");
 						});
 					},
@@ -248,10 +276,10 @@
 					$result.set("aboutText", textareaVal);
 					$result.save().then(function($obj) {
 						$("#about-form .form-group").removeClass('has-error');
-						alert("Save successful!");
+						pop.alert("Save successful!");
 						updateView("about");
 					}, function($error) {
-						alert("Save failed");
+						pop.alert("Save failed");
 						window.location.reload();
 					});
 				},
@@ -261,7 +289,7 @@
 			});
 		} else {
 			$("#about-form .form-group").addClass('has-error');
-			alert("Please, " + currentUserFirstName + ", you have to enter SOMETHING.");
+			pop.alert("Please, " + currentUserFirstName + ", you have to enter SOMETHING.");
 		}
 	};
 
@@ -295,16 +323,16 @@
 
 		}).promise().done(function(){
 			if(missingFields > 0){
-				alert("You are missing " + missingFields + " field(s) in the form. Come on " + currentUserFirstName + ".");
+				pop.alert("You are missing " + missingFields + " field(s) in the form. Come on " + currentUserFirstName + ".");
 			} else {
 				var query = new Parse.Query("Hero");
 				query.first({
 					success: function($result) {
 						$result.set(hero);
 						$result.save().then(function($obj) {
-							alert("Save successful!");
+							pop.alert("Save successful!");
 						}, function($error) {
-							alert("Save failed");
+							pop.alert("Save failed");
 						});
 					},
 					error: function(error) {
@@ -328,9 +356,9 @@
 				success: function($result) {
 					$result.set("youtube_id", idInput);
 					$result.save().then(function($obj) {
-						alert("Save successful!");
+						pop.alert("Save successful!");
 					}, function($error) {
-						alert("Save failed");
+						pop.alert("Save failed");
 					});
 				},
 				error: function(error) {
@@ -339,7 +367,7 @@
 			});
 		} else {
 			$("input[for='youtube_id']").closest(".form-group").addClass("has-error");
-			alert(currentUserFirstName + ", you need enter SOMETHING in the field, GEEZE.");
+			pop.alert(currentUserFirstName + ", you need enter SOMETHING in the field, GEEZE.");
 		}
 	};
 
@@ -385,7 +413,7 @@
 	var showsPopup = {
 		fadeIn : function($showId, $isOld, $shows){
 			if($showId){
-				var msg = $isOld ? "Edit Show <span class='alert'>Warning: This is show is old</span>" : "Edit Show";
+				var msg = $isOld ? "Edit Show <span class='pop.alert'>Warning: This is show is old</span>" : "Edit Show";
 				$(".addOrEdit").html(msg);
 				$(".editShow").attr("data-show-id", $showId);
 				populateShowsForm($showId, $shows, function(){
@@ -456,7 +484,7 @@
 			if(missingFields.length > 0){
 
 				var onlyOne = missingFields.length > 1 ? "s" : "";
-				alert("You are missing " + missingFields.length + " field" + onlyOne + "!");
+				pop.alert("You are missing " + missingFields.length + " field" + onlyOne + "!");
 
 			} else {
 
@@ -470,14 +498,14 @@
 					newshow.set(formVals);
 					newshow.save(null, {
 						success: function($newshow) {
-							var toClose = confirm("New show successfully saved!");
+							var toClose = pop.alert("New show successfully saved!");
 							if(toClose){
 								showsPopup.fadeOut();
 								updateView("shows");
 							}
 						},
 						error: function($newshow, $error) {
-							alert('Failed to create new object, with error code: ' + $error.message);
+							pop.alert('Failed to create new object, with error code: ' + $error.message);
 						}
 					});
 				} else {
@@ -488,11 +516,11 @@
 								if($results[i].id == showId){
 									$results[i].set(formVals);
 									$results[i].save().then(function($obj) {
-										alert("This show successfully updated!");
+										pop.alert("This show successfully updated!");
 										showsPopup.fadeOut();
 										updateView("shows");
 									}, function($error) {
-										alert("Save failed");
+										pop.alert("Save failed");
 									});
 								}
 							}
@@ -509,7 +537,7 @@
 	};
 
 	function deleteShow($thisId, $shows){
-		var checkFirst = confirm("Are you sure you want to delete this show?");
+		var checkFirst = pop.alert("Are you sure you want to delete this show?");
 		if(checkFirst){
 			var query = new Parse.Query('Shows');
 			query.get($thisId, {
@@ -520,13 +548,13 @@
 							updateView("shows");
 						},
 						error: function($err) {
-							alert("Delete failed, check console for details.");
+							pop.alert("Delete failed, check console for details.");
 							console.log($err);
 						}
 					});
 				},
 				error : function($obj,$err){
-					alert("Table query failed, check console for details.");
+					pop.alert("Table query failed, check console for details.");
 					console.log($obj);
 					console.log($err);
 				}
