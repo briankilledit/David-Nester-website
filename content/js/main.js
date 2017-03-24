@@ -73,8 +73,6 @@ $(document).ready(function(){
 	var channelId  = $("#videoList").attr("youtube");
 	var apiKey     = "AIzaSyAKgQN4DxNo4XvdpIH3sKaZgX1F1upw7rQ";
 
-	console.log(channelId);
-
 	function fetchYoutubeData(){
 		$.get(
 			'https://www.googleapis.com/youtube/v3/channels',{
@@ -121,6 +119,7 @@ $(document).ready(function(){
 			};
 		});
 	};
+
 
 
 

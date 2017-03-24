@@ -20,7 +20,7 @@
 		<script class="davidNester" src="content/js/main.js" type="text/javascript"></script>
 
 	</head>
-	<body class="dev">
+	<body>
 
 		<?php require 'autoload.php'; ?>
 
