@@ -59,29 +59,55 @@
 
 	var pop = {
 		show: function($func){
-			$(".blackout.alert").fadeIn();
+			$(".blackout.alert").fadeIn(200);
 		},
-		hide: function(){
-			$(".blackout.alert").fadeOut();
+		hide: function($func){
+			$(".blackout.alert").fadeOut(200).promise().done(function(){
+				if($func){
+					$func();
+				}
+			});
 		},
-		alert: function($text){
-
-			var thisFor;
+		alert: function($text, $obj){
 
 			$text = $text ? $text : "Are you sure?";
-
 			$(".blackout.alert .panel-body p").html($text).promise().done(function(){
 				pop.show();
 			});
 
 			$(".blackout.alert .panel-body .btn").on('click', function(){
-				pop.hide();
-				thisFor = $(this).attr("for") == "confirm";
 
-				return thisFor;
+
+				var thisFor = $(this).attr("for");
+
+				if($obj){
+
+					if($obj.afterClose){
+
+						pop.hide(function(){
+							$obj.afterClose();
+						});
+
+					} else if ($obj.yes && thisFor == "confirm"){
+
+						pop.hide(function(){
+							$obj.yes();
+						});
+
+					} else if ($obj.yes && thisFor !== "confirm"){
+						
+						pop.hide(function(){
+							$obj.no();
+						});
+					}
+
+				} else {
+
+					pop.hide();
+
+				};
 				
 			});
-
 		}
 	};
 
@@ -413,7 +439,7 @@
 	var showsPopup = {
 		fadeIn : function($showId, $isOld, $shows){
 			if($showId){
-				var msg = $isOld ? "Edit Show <span class='pop.alert'>Warning: This is show is old</span>" : "Edit Show";
+				var msg = $isOld ? "Edit Show <span class='alert'>Warning: This is show is old</span>" : "Edit Show";
 				$(".addOrEdit").html(msg);
 				$(".editShow").attr("data-show-id", $showId);
 				populateShowsForm($showId, $shows, function(){
@@ -498,11 +524,12 @@
 					newshow.set(formVals);
 					newshow.save(null, {
 						success: function($newshow) {
-							var toClose = pop.alert("New show successfully saved!");
-							if(toClose){
-								showsPopup.fadeOut();
-								updateView("shows");
-							}
+							pop.alert("New show successfully saved!", {
+								afterClose: function(){
+									showsPopup.fadeOut();
+									updateView("shows");
+								}
+							});
 						},
 						error: function($newshow, $error) {
 							pop.alert('Failed to create new object, with error code: ' + $error.message);
@@ -516,9 +543,12 @@
 								if($results[i].id == showId){
 									$results[i].set(formVals);
 									$results[i].save().then(function($obj) {
-										pop.alert("This show successfully updated!");
-										showsPopup.fadeOut();
-										updateView("shows");
+										pop.alert("This show successfully updated!", {
+											afterClose: function(){
+												showsPopup.fadeOut();
+												updateView("shows");
+											}
+										});
 									}, function($error) {
 										pop.alert("Save failed");
 									});
@@ -537,29 +567,30 @@
 	};
 
 	function deleteShow($thisId, $shows){
-		var checkFirst = pop.alert("Are you sure you want to delete this show?");
-		if(checkFirst){
-			var query = new Parse.Query('Shows');
-			query.get($thisId, {
-				success : function($obj){
-					$obj.destroy({
-						success: function() {
-							showsPopup.fadeOut();
-							updateView("shows");
-						},
-						error: function($err) {
-							pop.alert("Delete failed, check console for details.");
-							console.log($err);
-						}
-					});
-				},
-				error : function($obj,$err){
-					pop.alert("Table query failed, check console for details.");
-					console.log($obj);
-					console.log($err);
-				}
-			});
-		}
+		pop.alert("Are you sure you want to delete this show?", {
+			yes: function(){
+				var query = new Parse.Query('Shows');
+				query.get($thisId, {
+					success : function($obj){
+						$obj.destroy({
+							success: function() {
+								showsPopup.fadeOut();
+								updateView("shows");
+							},
+							error: function($err) {
+								pop.alert("Delete failed, check console for details.");
+								console.log($err);
+							}
+						});
+					},
+					error : function($obj,$err){
+						pop.alert("Table query failed, check console for details.");
+						console.log($obj);
+						console.log($err);
+					}
+				});
+			}
+		});
 	};
 
 	function calenderForm(){
