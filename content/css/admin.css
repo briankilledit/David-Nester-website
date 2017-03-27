@@ -19,6 +19,49 @@ body.admin .btn.btn-sm {
 }
 
 
+
+	/* ---------------------------
+		Universal loader bar
+	--------------------------- */
+
+	body.admin .loaderBar {
+		display: none;
+		z-index: 200;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 8px;
+		background-color: #636363;
+		background-image: url("../img/loaderStripes.png");
+		-webkit-animation: 20s scroll infinite linear;
+		-moz-animation: 20s scroll infinite linear;
+		-o-animation: 20s scroll infinite linear;
+		-ms-animation: 20s scroll infinite linear;
+		animation: 20s scroll infinite linear;
+	}
+
+	@-webkit-keyframes scroll { 
+		100% { background-position: -3000px 0px; }
+	}
+
+	@-moz-keyframes scroll { 
+		100% { background-position: -3000px 0px; }
+	}
+
+	@-o-keyframes scroll { 
+		100% { background-position: -3000px 0px; }
+	}
+
+	@-ms-keyframes scroll { 
+		100% { background-position: -3000px 0px; }
+	}
+
+	@keyframes scroll { 
+		100% { background-position: -3000px 0px; }
+	}
+
+
 	/* ---------------------------
 		   Popup for shows
 	--------------------------- */
@@ -37,9 +80,17 @@ body.admin .btn.btn-sm {
 		body.admin .blackout .wrap {
 			width: 100%;
 			max-width: 600px;
-			margin: 50px auto;
 			box-shadow: 2px 2px 8px #000000;
+			margin: 0 auto;
+
 			position: relative;
+			top: 50%;
+			-webkit-transform: translateY(-50%);
+			-moz-transform: translateY(-50%);
+			-ms-transform: translateY(-50%);
+			-o-transform: translateY(-50%);
+			transform: translateY(-50%);
+
 		}
 
 		body.admin .blackout .wrap .closePopup {
@@ -101,17 +152,14 @@ body.admin .btn.btn-sm {
 	/* ---------------------------
 		   Popup for alerts
 	--------------------------- */
-/*
+
 	body.admin .blackout.alert {
-		display: block;
+		z-index: 101;
 	}
-*/
-		body.admin .blackout .wrap {
+
+		body.admin .blackout.alert .wrap {
 			width: 100%;
 			max-width: 450px;
-			/*margin: 50px auto;
-			box-shadow: 2px 2px 8px #000000;
-			position: relative;*/
 		}
 
 			body.admin .blackout.alert .panel-body {

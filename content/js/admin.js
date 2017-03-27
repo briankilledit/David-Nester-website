@@ -6,7 +6,11 @@
 	const PARSE_ID = "edbfdd6e-d9d4-4231-a614-41a72f87fe1f";
 	const PARSE_SERVER_URL = 'https://api.parse.buddy.com/parse/';
 
+	// Global VARs
+	// ===================================
 	var currentUserFirstName = "man";
+	var loader = $("body.admin .loaderBar");
+
 
 	// Functions
 	// ===================================
@@ -38,27 +42,32 @@
 
 	function login(){
 
+		loader.show();
+
 		var parseUser = $(".login #email").val(),
 			parsePass = $(".login #password").val();
 
 		Parse.User.logIn(parseUser, parsePass, {
 			success: function($user) {
+				loader.hide();
 				updateView('index');
 			},
 			error: function($user, $err) {
+				loader.hide();
 				pop.alert($err.message);
 			}
 		});
 	};
 
 	function logout(){
+		loader.show();
 		Parse.User.logOut().then(function(){
 			location.reload();
 		});
 	};
 
 	var pop = {
-		show: function($func){
+		show: function(){
 			$(".blackout.alert").fadeIn(200);
 		},
 		hide: function($func){
@@ -76,37 +85,24 @@
 			});
 
 			$(".blackout.alert .panel-body .btn").on('click', function(){
-
-
 				var thisFor = $(this).attr("for");
-
 				if($obj){
-
 					if($obj.afterClose){
-
 						pop.hide(function(){
 							$obj.afterClose();
 						});
-
 					} else if ($obj.yes && thisFor == "confirm"){
-
 						pop.hide(function(){
 							$obj.yes();
 						});
-
 					} else if ($obj.yes && thisFor !== "confirm"){
-						
 						pop.hide(function(){
 							$obj.no();
 						});
 					}
-
 				} else {
-
 					pop.hide();
-
 				};
-				
 			});
 		}
 	};
@@ -143,6 +139,7 @@
 			$("section.hero input").attr("placeholder", "loading...");
 			var hero = {};
 			var query = new Parse.Query("Hero");
+			loader.show();
 			query.first({
 				success: function($result) {
 					hero.title = $result.get("title");
@@ -151,29 +148,35 @@
 					hero.imgUrl = $result.get("imgUrl");
 					populateHeroForm(hero);
 					$("section.hero input").attr("placeholder", "Please enter a value here");
+					loader.hide();
 				},
 				error: function(error) {
-					console.log("Error: " + error.code + " " + error.message);
+					pop.alert("Error: " + error.code + " " + error.message);
+					loader.hide();
 				}
 			});
 		},
 		videos : function(){
 			$("input[for='youtube_id']").attr("placeholder", "loading...");
 			var query = new Parse.Query("Videos");
+			loader.show();
 			query.first({
 				success: function($result) {
 					var youtube_id = $result.get("youtube_id");
 					$("input[for='youtube_id']").val(youtube_id);
 					$("input[for='youtube_id']").attr("placeholder", "Please enter youtube channel ID here");
+					loader.hide();
 				},
 				error: function(error) {
-					console.log("Error: " + error.code + " " + error.message);
+					pop.alert("Error: " + error.code + " " + error.message);
+					loader.hide();
 				}
 			});			
 		},
 		shows : function(){
 			var shows = [];
 			var query = new Parse.Query('Shows');
+			loader.show();
 			query.find({
 				success: function(results) {
 					for (var i = 0; i < results.length; i++) {
@@ -192,9 +195,11 @@
 						shows.push(newShow);
 					}
 					populateShowsList(shows);
+					loader.hide();
 				},
 				error: function(error) {
-					console.log("Error: " + error.code + " " + error.message);
+					pop.alert("Error: " + error.code + " " + error.message);
+					loader.hide();
 				}
 			});
 		},
@@ -202,20 +207,24 @@
 			$("#aboutTextEditor").removeClass('ready');
 			$("#aboutTextEditor").html("<p>Loading...</p>");
 			var query = new Parse.Query('About');
+			loader.show();
 			query.first({
 				success: function($result) {
 					var aboutText = $result.get('aboutText');
 					$("#aboutTextEditor").addClass('ready');
 					populateAboutForm(aboutText);
+					loader.hide();
 				},
 				error: function(error) {
-					console.log("Error: " + error.code + " " + error.message);
+					pop.alert("Error: " + error.code + " " + error.message);
+					loader.hide();
 				}
 			});
 		},
 		contact : function(){
 			$("section.contact input").attr("placeholder", "loading...");
 			var query = new Parse.Query('Contact');
+			loader.show();
 			query.first({
 				success: function($result) {
 					var contactInfo = {};
@@ -227,9 +236,11 @@
 					contactInfo.instagram = $result.get('instagram');
 					populateContactForm(contactInfo);
 					$("section.contact input").attr("placeholder", "Please enter a value here");
+					loader.hide();
 				},
 				error: function(error) {
-					console.log("Error: " + error.code + " " + error.message);
+					pop.alert("Error: " + error.code + " " + error.message);
+					loader.hide();
 				}
 			});
 		}
@@ -266,6 +277,7 @@
 				pop.alert("DAMMIT " + currentUserFirstName + "! You are missing " + emptyFields + " field(s) in the form!");
 			} else {
 				var query = new Parse.Query("Contact");
+				loader.show();
 				query.first({
 					success: function($result) {
 						$result.set(formVals);
@@ -276,9 +288,11 @@
 							pop.alert("Save failed");
 							updateView("contact");
 						});
+						loader.hide();
 					},
 					error: function(error) {
-						console.log("Error: " + error.code + " " + error.message);
+						pop.alert("Error: " + error.code + " " + error.message);
+						loader.hide();
 					}
 				});
 			}
@@ -297,6 +311,7 @@
 		var textareaVal = $("#aboutTextEditor").html();
 		if(textareaVal.length > 11){
 			var query = new Parse.Query("About");
+			loader.show();
 			query.first({
 				success: function($result) {
 					$result.set("aboutText", textareaVal);
@@ -308,9 +323,11 @@
 						pop.alert("Save failed");
 						window.location.reload();
 					});
+					loader.hide();
 				},
 				error: function(error) {
-					console.log("Error: " + error.code + " " + error.message);
+					pop.alert("Error: " + error.code + " " + error.message);
+					loader.hide();
 				}
 			});
 		} else {
@@ -352,6 +369,7 @@
 				pop.alert("You are missing " + missingFields + " field(s) in the form. Come on " + currentUserFirstName + ".");
 			} else {
 				var query = new Parse.Query("Hero");
+				loader.show();
 				query.first({
 					success: function($result) {
 						$result.set(hero);
@@ -360,9 +378,11 @@
 						}, function($error) {
 							pop.alert("Save failed");
 						});
+						loader.hide();
 					},
 					error: function(error) {
-						console.log("Error: " + error.code + " " + error.message);
+						pop.alert("Error: " + error.code + " " + error.message);
+						loader.hide();
 					}
 				});
 			}
@@ -378,6 +398,7 @@
 		if(idInput.length > 0){
 			$("input[for='youtube_id']").closest(".form-group").removeClass("has-error");
 			var query = new Parse.Query("Videos");
+			loader.show();
 			query.first({
 				success: function($result) {
 					$result.set("youtube_id", idInput);
@@ -386,9 +407,11 @@
 					}, function($error) {
 						pop.alert("Save failed");
 					});
+					loader.hide();
 				},
 				error: function(error) {
-					console.log("Error: " + error.code + " " + error.message);
+					pop.alert("Error: " + error.code + " " + error.message);
+					loader.hide();
 				}
 			});
 		} else {
@@ -522,8 +545,10 @@
 					var NewShow = Parse.Object.extend("Shows");
 					var newshow = new NewShow();
 					newshow.set(formVals);
+					loader.show();
 					newshow.save(null, {
 						success: function($newshow) {
+							loader.hide();
 							pop.alert("New show successfully saved!", {
 								afterClose: function(){
 									showsPopup.fadeOut();
@@ -533,10 +558,12 @@
 						},
 						error: function($newshow, $error) {
 							pop.alert('Failed to create new object, with error code: ' + $error.message);
+							loader.hide();
 						}
 					});
 				} else {
 					var query = new Parse.Query('Shows');
+					loader.show();
 					query.find({
 						success: function($results) {
 							for(var i = 0; i < $results.length; i++) {
@@ -550,13 +577,15 @@
 											}
 										});
 									}, function($error) {
-										pop.alert("Save failed");
+										pop.alert("Save failed :(");
 									});
 								}
 							}
+							loader.hide();
 						},
 						error: function(error) {
-							console.log("Error: " + error.code + " " + error.message);
+							pop.alert("Error: " + error.code + " " + error.message);
+							loader.hide();
 						}
 					});
 				}
@@ -570,6 +599,7 @@
 		pop.alert("Are you sure you want to delete this show?", {
 			yes: function(){
 				var query = new Parse.Query('Shows');
+				loader.show();
 				query.get($thisId, {
 					success : function($obj){
 						$obj.destroy({
@@ -578,15 +608,17 @@
 								updateView("shows");
 							},
 							error: function($err) {
-								pop.alert("Delete failed, check console for details.");
+								pop.alert("Delete failed, please try again.");
 								console.log($err);
 							}
 						});
+						loader.hide();
 					},
 					error : function($obj,$err){
-						pop.alert("Table query failed, check console for details.");
+						pop.alert("Delete failed, please try again.");
 						console.log($obj);
 						console.log($err);
+						loader.hide();
 					}
 				});
 			}
