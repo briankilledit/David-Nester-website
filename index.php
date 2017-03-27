@@ -93,7 +93,7 @@
 			</div>
 		</div>
 
-<!-- 		<div id="dates" class="wrapper">
+		<div id="dates" class="wrapper">
 			<div class="content">
 				<h1>Dates</h1>
 				<table>
@@ -108,125 +108,20 @@
 					<tbody>
 
 						<?php 
-							// foreach ($showItems as $show){
-							// 	echo "<tr>
-							// 			<td>" . $show["date"] . "</td>
-							// 			<td>" . $show["venue"] . "<br>" . $show["city"] . ", " . $show["state"] . "</td>
-							// 			<td>" . $show["band"] . "</td>
-							// 			<td class='perf'>" . $show["type"] . "</td>
-							// 		</tr>";
-							// }
+							foreach ($showItems as $show){
+								echo "<tr>
+										<td>" . $show["date"] . "</td>
+										<td>" . $show["venue"] . "<br>" . $show["city"] . ", " . $show["state"] . "</td>
+										<td>" . $show["band"] . "</td>
+										<td class='perf'>" . $show["type"] . "</td>
+									</tr>";
+							}
 						?>
 
 					</tbody>
 				</table>
 			</div>
-		</div> -->
-
-
-
-
-<div id="dates" class="wrapper">
-			<div class="content">
-				<h1>Dates</h1>
-				<table>
-					<thead>
-						<tr>
-							<td class="headerRow">Date</td>
-							<td class="headerRow">Location</td>
-							<td class="headerRow">Band</td>
-							<td class="headerRow perf">Type</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>3/31/17</td>
-							<td>Jim &amp; Jacks on the River<br>Cincinnati, OH</td>
-							<td>Jason Owens Band</td>
-							<td class="perf">Drummer</td>
-						</tr><tr>
-							<td>4/1/17</td>
-							<td>Club Trio Lounge<br>Cincinnati, OH</td>
-							<td>The Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr><tr>
-							<td>4/14/17</td>
-							<td>Jerzees<br>Newport, KY</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr><tr>
-							<td>4/22/17</td>
-							<td>Mutts Brewery Lounge<br>Trenton, OH</td>
-							<td>The Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr><tr>
-							<td>5/12/17</td>
-							<td>Bogarts<br>Cincinnati, OH</td>
-							<td>The Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr><tr>
-							<td>5/20/17</td>
-							<td>KJ's<br>Crecent Springs, KY</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr><tr>
-							<td>5/21/17</td>
-							<td>Coney Island - Autism Speaks Walk<br>Cincinnati, OH</td>
-							<td>The Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr><tr>
-							<td>5/26/17</td>
-							<td>Riverside Marina<br>Dayton, KY</td>
-							<td>The Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr><tr>
-							<td>6/2/17</td>
-							<td>Jerzees<br>Newport, KY</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr><tr>
-							<td>6/8/17</td>
-							<td>Quaker Steak &amp; Lube - Bike Night<br>Cincinnati, OH</td>
-							<td>The Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr><tr>
-							<td>6/10/17</td>
-							<td>Camp Kern - Epilepsy Surgery Family Reunion - Cincinnati Childrens Hospital<br>Oregonia, OH</td>
-							<td>The Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr><tr>
-							<td>6/30/17</td>
-							<td>Margaritaville<br>Pensacola Beach, FL</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr><tr>
-							<td>7/1/17</td>
-							<td>Margaritaville<br>Pensacola Beach, FL</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr><tr>
-							<td>7/7/17</td>
-							<td>Margaritaville<br>Pensacola Beach, FL</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr><tr>
-							<td>7/8/17</td>
-							<td>Margaritaville<br>Pensacola Beach, FL</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr><tr>
-							<td>7/15/17</td>
-							<td>KJ's<br>Crescent Springs, KY</td>
-							<td>Billy Brown Band</td>
-							<td class="perf">Drummer</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
 		</div>
-
-
-
 
 		<div id="about" class="wrapper">
 			<div class="content">
