@@ -1,8 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
 
-	<head profile="http://www.w3.org/2005/10/profile">
+	<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+
+		<meta property="fb:app_id" content="966242223397117" />
+		<meta property="og:image" content="http://www.davidnester.com/content/img/sitePreview.jpg">
+		<meta property="og:image:type" content="image/jpg">
+		<meta property="og:image:width" content="1200"/>
+		<meta property="og:image:height" content="771"/>
+		<meta property="og:type" content="website">
+		<meta property="og:title" content="David Nester">
+		<meta property="og:description" content="Drummer and Drum Technician">
+
 		<link rel="icon" type="image/ico" href="content/img/favicon.ico">
 		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
