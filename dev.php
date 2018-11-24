@@ -1,24 +1,36 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
 
-	<head profile="http://www.w3.org/2005/10/profile">
+	<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+
+		<meta property="fb:app_id" content="966242223397117" />
+		<meta property="og:image" content="http://www.davidnester.com/content/img/sitePreview.jpg">
+		<meta property="og:image:type" content="image/jpg">
+		<meta property="og:image:width" content="1200"/>
+		<meta property="og:image:height" content="771"/>
+		<meta property="og:type" content="website">
+		<meta property="og:title" content="David Nester">
+		<meta property="og:description" content="Drummer and Drum Technician">
+
 		<link rel="icon" type="image/ico" href="content/img/favicon.ico">
 		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="description" content="David Nester Drums - Official Website.">
 
-		<title>David Nester Drums</title>
+		<title>(Dev) David Nester Drums</title>
 
 		<!-- CSS -->
 		<link rel="stylesheet" type="text/css" href="content/css/style.css">
 
 		<!-- Javascript -->
 		<script class="davidNester" src="content/js/vendor/jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script class="davidNester" src="content/js/killJunk.js" type="text/javascript"></script>
+		<script class="davidNester" src="content/js/main.js" type="text/javascript"></script>
 
 	</head>
-	<body class="dev">
+	<body>
 
 		<?php require 'autoload.php'; ?>
 
@@ -74,10 +86,10 @@
 			<div class="content">
 				<h1>Videos</h1>
 				<p class="small">Click image to play video</a>
-				<ul id="videoList" youtube="<?php echo $youtubeId ?>">
+				<ul id="videoList" youtube="<?php echo $youtubeId ?>" playlist="<?php echo $playlistId ?>" limit="<?php echo $displayLimit ?>">
 
 					<!-- ===================================================================================
-					Leaving this here for reference ... js youtube api populates this list now sonny boy ! 
+					Leaving this here for reference ... js youtube api populates this list (see main.js)
 					==================================================================================== -->
 
 					<!-- <li video='https://www.youtube.com/embed/Cua06hSlCKY'>
@@ -97,7 +109,7 @@
 				<table>
 					<thead>
 						<tr>
-							<td class="headerRow">Date(s)</td>
+							<td class="headerRow">Date</td>
 							<td class="headerRow">Location</td>
 							<td class="headerRow">Band</td>
 							<td class="headerRow perf">Type</td>
@@ -144,10 +156,6 @@
 				</div>
 			</div>
 		</div>
-
-		<!-- Custom js -->
-		<script class="davidNester" src="content/js/killJunk.js" type="text/javascript"></script>
-		<script class="davidNester" src="content/js/main.js" type="text/javascript"></script>
 
 	</body>
 </html>

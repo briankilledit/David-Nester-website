@@ -44,7 +44,10 @@ $heroItems['imgUrl'] = $heroResult->get('imgUrl');
 
 $videoQuery = new ParseQuery("Videos");
 $videoResult = $videoQuery->first();
+
 $youtubeId = $videoResult->get('youtube_id');
+$playlistId = $videoResult->get('playlist_id');
+$displayLimit = $videoResult->get('displayLimit');
 
 
 

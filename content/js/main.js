@@ -1,6 +1,6 @@
 //  *
 //  *
-//  *	Copyright 2016
+//  *	Copyright 2018
 //  *	Brian Stephens
 //  *	for
 //  *	David Nester Drums
@@ -71,31 +71,56 @@ $(document).ready(function(){
 	// ----------------------------------------------------
 
 	var channelId  = $("#videoList").attr("youtube");
+	var playlistId  = $("#videoList").attr("playlist");
+	var limit  = $("#videoList").attr("limit");
 	var apiKey     = "AIzaSyAKgQN4DxNo4XvdpIH3sKaZgX1F1upw7rQ";
 
 	function fetchYoutubeData(){
 		$.get(
-			'https://www.googleapis.com/youtube/v3/channels',{
-				part: 'contentDetails',
-				id: channelId,
-				key: apiKey }
-		).done(function(data){
-			var pid = data.items[0].contentDetails.relatedPlaylists.uploads;
-			getVids(pid);
-		});
-	};
-
-	function getVids($pid){
-		$.get(
 			'https://www.googleapis.com/youtube/v3/playlistItems',{
 				part: 'snippet',
-				maxResults: 6,
-				playlistId: $pid,
+				maxResults: limit,
+				playlistId: playlistId,
 				key: apiKey }
 		).done(function(data){
 			appendVideoList(data.items);
 		});
 	};
+
+	// ========================================================
+	// 
+	// These functions were removed on 11/24/18
+	// Its functionality returns the latest uploads from
+	// a user channel and popluates them on the page.
+	// 
+
+	// function fetchYoutubeData(){
+	// 	$.get(
+	// 		'https://www.googleapis.com/youtube/v3/channels',{
+	// 			part: 'contentDetails',
+	// 			id: channelId,
+	// 			key: apiKey }
+	// 	).done(function(data){
+	// 		console.log(data);
+	// 		var pid = data.items[0].contentDetails.relatedPlaylists.uploads;
+	// 		getVids(pid);
+	// 	});
+
+	// };
+
+	// function getVids($pid){
+	// 	$.get(
+	// 		'https://www.googleapis.com/youtube/v3/playlistItems',{
+	// 			part: 'snippet',
+	// 			maxResults: 6,
+	// 			playlistId: $pid,
+	// 			key: apiKey }
+	// 	).done(function(data){
+	// 		appendVideoList(data.items);
+	// 	});
+	// };
+
+	// ========================================================
 
 	function appendVideoList($vids){
 		$("#videoList").html("");

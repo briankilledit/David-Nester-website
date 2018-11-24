@@ -86,10 +86,10 @@
 			<div class="content">
 				<h1>Videos</h1>
 				<p class="small">Click image to play video</a>
-				<ul id="videoList" youtube="<?php echo $youtubeId ?>">
+				<ul id="videoList" youtube="<?php echo $youtubeId ?>" playlist="<?php echo $playlistId ?>" limit="<?php echo $displayLimit ?>">
 
 					<!-- ===================================================================================
-					Leaving this here for reference ... js youtube api populates this list now sonny boy ! 
+					Leaving this here for reference ... js youtube api populates this list (see main.js)
 					==================================================================================== -->
 
 					<!-- <li video='https://www.youtube.com/embed/Cua06hSlCKY'>

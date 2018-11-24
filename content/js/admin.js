@@ -163,8 +163,12 @@
 			query.first({
 				success: function($result) {
 					var youtube_id = $result.get("youtube_id");
+					var playlist_id = $result.get("playlist_id");
+					var displayLimit = $result.get("displayLimit");
 					$("input[for='youtube_id']").val(youtube_id);
-					$("input[for='youtube_id']").attr("placeholder", "Please enter youtube channel ID here");
+					$("input[for='playlist_id']").val(playlist_id);
+					$("input[for='displayLimit']").val(displayLimit);
+					$("section.videos input").attr("placeholder", "Please enter a value here");
 					loader.hide();
 				},
 				error: function(error) {
@@ -394,37 +398,51 @@
 	// ============================================
 
 	function saveVideosForm(){
-		var idInput = $("input[for='youtube_id']").val();
-		if(idInput.length > 0){
-			$("input[for='youtube_id']").closest(".form-group").removeClass("has-error");
-			var query = new Parse.Query("Videos");
-			loader.show();
-			query.first({
-				success: function($result) {
-					$result.set("youtube_id", idInput);
-					$result.save().then(function($obj) {
-						pop.alert("Save successful!");
-					}, function($error) {
-						pop.alert("Save failed");
-					});
-					loader.hide();
-				},
-				error: function(error) {
-					pop.alert("Error: " + error.code + " " + error.message);
-					loader.hide();
-				}
-			});
-		} else {
-			$("input[for='youtube_id']").closest(".form-group").addClass("has-error");
-			pop.alert(currentUserFirstName + ", you need enter SOMETHING in the field, GEEZE.");
-		}
+		var videoObj = {};
+		var missingFields = 0;
+		$("section.videos input[type='text']").each(function(){
+			var val = $(this).val();
+			var forAttr = $(this).attr("for");
+
+			if(val.length > 0){
+				videoObj[forAttr] = val;
+				$(this).closest(".form-group").removeClass("has-error");
+			} else {
+				missingFields++;
+				$(this).closest(".form-group").addClass("has-error");
+			}
+
+		}).promise().done(function(){
+			if(missingFields > 0){
+				pop.alert("You are missing " + missingFields + " field(s) in the form. Come on " + currentUserFirstName + ".");
+			} else {
+				var query = new Parse.Query("Videos");
+				loader.show();
+				query.first({
+					success: function($result) {
+						$result.set(videoObj);
+						$result.save().then(function($obj) {
+							pop.alert("Save successful!");
+						}, function($error) {
+							pop.alert("Save failed");
+							console.log($error);
+						});
+						loader.hide();
+					},
+					error: function(error) {
+						pop.alert("Error: " + error.code + " " + error.message);
+						loader.hide();
+					}
+				});
+			}
+		});
 	};
 
 	// ============================================
 	// 				SHOWS LIST
 	// ============================================
 
-	// Simple util to return a date object from a "xx/xx/xx" style sate string
+	// Simple util to return a date object from a "xx/xx/xx" style string
 	// -------------------------------------------------------------------------------------
 	function createDateObj($date) {
 		var dateParts = $date.split("/");
@@ -437,7 +455,8 @@
 		var yesterday = (function(d){ d.setDate(d.getDate()-1); return d})(new Date);
 
 		$shows.sort(function(a, b){
-			return a.dateObj - b.dateObj;
+			// return a.dateObj - b.dateObj;
+			return b.dateObj - a.dateObj;
 		});
 
 		$(".showsList tbody").empty().promise().done(function(){
