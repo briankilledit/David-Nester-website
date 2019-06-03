@@ -3,8 +3,11 @@
 
 	// Constants
 	// ===================================
-	const PARSE_ID = "edbfdd6e-d9d4-4231-a614-41a72f87fe1f";
-	const PARSE_SERVER_URL = 'https://api.parse.buddy.com/parse/';
+	// const PARSE_ID = "edbfdd6e-d9d4-4231-a614-41a72f87fe1f";
+	// const PARSE_SERVER_URL = 'https://api.parse.buddy.com/parse/';
+	const PARSE_ID = "9Eno0UYO18a5d3qWORc4OQQHzVzEdWkOBEuRu36P";
+	const PARSE_JS_ID = "7JtPu8RstTSzsD6OK3zL1LOv2gsitkv5FJBz8yIK";
+	const PARSE_SERVER_URL = 'https://parseapi.back4app.com';
 
 	// Global VARs
 	// ===================================
@@ -17,7 +20,7 @@
 	function initApp(){
 		bindEvents();
 		calenderForm();
-		Parse.initialize(PARSE_ID);
+		Parse.initialize(PARSE_ID, PARSE_JS_ID);
 		Parse.serverURL = PARSE_SERVER_URL;
 		CKEDITOR.inline('aboutTextEditor');
 		CKEDITOR.on("instanceReady", function(event){

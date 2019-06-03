@@ -12,8 +12,13 @@ use Parse\ParseFile;
 use Parse\ParseCloud;
 use Parse\ParseClient;
 
-ParseClient::initialize( 'edbfdd6e-d9d4-4231-a614-41a72f87fe1f', '', '8BqLBYdL8QhvdFggDK8mgXjMp7zCOll6' );
-ParseClient::setServerURL('https://api.parse.buddy.com/', 'parse');
+$app_id = '9Eno0UYO18a5d3qWORc4OQQHzVzEdWkOBEuRu36P';
+$rest_key = 'IjPbrONJvO8xo9RYd4i9TGZA65UPRrsu25hRSnDV';
+$master_key = 'IjPbrONJvO8xo9RYd4i9TGZA65UPRrsu25hRSnDV';
+
+ParseClient::initialize( $app_id, $rest_key, $master_key);
+ParseClient::setServerURL('https://parseapi.back4app.com/','/');
+
 
 // Utils
 // ====================================
