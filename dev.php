@@ -19,7 +19,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="description" content="David Nester Drums - Official Website.">
 
-		<title>(Dev) David Nester Drums</title>
+		<title>David Nester Drums</title>
 
 		<!-- CSS -->
 		<link rel="stylesheet" type="text/css" href="content/css/style.css">
@@ -143,7 +143,7 @@
 		<div id="footer" class="wrapper">
 			<div class="content">
 				<div class="foot-left">
-					<p>&copy; 2016 David Nester<br>Website by <a href="http://www.stephensdesigns.com" target="_blank">Brian Stephens</a></p>
+					<p>&copy; <?php echo date("Y"); ?> David Nester<br>Website by <a href="http://www.stephensdesigns.com" target="_blank">Brian Stephens</a></p>
 				</div>
 				<div class="foot-right">
 					<div class="socMed">
