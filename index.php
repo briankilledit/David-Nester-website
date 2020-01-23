@@ -121,7 +121,7 @@
 							foreach ($showItems as $show){
 								echo "<tr>
 										<td>" . $show["date"] . "</td>
-										<td>" . $show["venue"] . "<br>" . $show["city"] . ", " . $show["state"] . "</td>
+										<td>" . $show["venue"] . "<br>" . $show["city"] . ", " . $show["state"] . "<br>" . $show["country"] . "</td>
 										<td>" . $show["band"] . "</td>
 										<td class='perf'>" . $show["type"] . "</td>
 									</tr>";

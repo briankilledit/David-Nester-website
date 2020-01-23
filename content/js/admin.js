@@ -197,6 +197,7 @@
 						newShow.venue = results[i].get('venue');
 						newShow.city = results[i].get('city');
 						newShow.state = results[i].get('state');
+						newShow.country = results[i].get('country');
 						newShow.band = results[i].get('band');
 						newShow.type = results[i].get('type');
 						shows.push(newShow);
@@ -466,7 +467,7 @@
 			for(var i = 0; i < $shows.length; i++){
 				var compare = $shows[i].dateObj - yesterday;
 				var oldShow = compare < 0 ? "old" : "";
-				var thisShowRow = "<tr class='" + oldShow + "' showid='" + $shows[i].id + "'><td>" + $shows[i].date + "</td><td>" + $shows[i].venue + "</td><td>" + $shows[i].city + "</td><td>" + $shows[i].state + "</td><td>" + $shows[i].band + "</td><td>" + $shows[i].type + "</td><td><button class='btn btn-xs btn-danger pull-right' id='deleteShow'>Delete</button></td></tr>";
+				var thisShowRow = "<tr class='" + oldShow + "' showid='" + $shows[i].id + "'><td>" + $shows[i].date + "</td><td>" + $shows[i].venue + "</td><td>" + $shows[i].city + "</td><td>" + $shows[i].state + "</td><td>" + $shows[i].country + "</td><td>" + $shows[i].band + "</td><td>" + $shows[i].type + "</td><td><button class='btn btn-xs btn-danger pull-right' id='deleteShow'>Delete</button></td></tr>";
 				$(".showsList tbody").append(thisShowRow);
 			}
 		});
@@ -484,7 +485,7 @@
 	var showsPopup = {
 		fadeIn : function($showId, $isOld, $shows){
 			if($showId){
-				var msg = $isOld ? "Edit Show <span class='alert'>Warning: This is show is old</span>" : "Edit Show";
+				var msg = $isOld ? "Edit Show <span class='alert'>Warning: This show is old</span>" : "Edit Show";
 				$(".addOrEdit").html(msg);
 				$(".editShow").attr("data-show-id", $showId);
 				populateShowsForm($showId, $shows, function(){

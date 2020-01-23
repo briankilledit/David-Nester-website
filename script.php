@@ -72,6 +72,7 @@ for ($i = 0; $i < count($showResults); $i++) {
     $newShow['date'] = $showResults[$i]->get('date');
     $newShow['city'] = $showResults[$i]->get('city');
     $newShow['state'] = $showResults[$i]->get('state');
+    $newShow['country'] = $showResults[$i]->get('country');
     $newShow['venue'] = $showResults[$i]->get('venue');
     $newShow['band'] = $showResults[$i]->get('band');
     $newShow['type'] = $showResults[$i]->get('type');
